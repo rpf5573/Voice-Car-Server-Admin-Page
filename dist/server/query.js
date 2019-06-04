@@ -41,21 +41,35 @@ class Metas {
     }
     get(key) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!Array.isArray(key)) {
-                const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
-                const result = yield this.pool.query(sql);
-                console.dir(result);
-                console.log(result.values);
+            try {
+                if (!Array.isArray(key)) {
+                    const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
+                    let rows = yield this.pool.query(sql);
+                    if (Array.isArray(rows)) {
+                        return rows[0].metaValue;
+                    }
+                }
+                else {
+                    const keys = key.reduce(function (cl, a, currIndex, arr) {
+                        return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
+                    }, "");
+                    const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
+                    const rows = yield this.pool.query(sql);
+                    console.log(`LOG: Metas -> get -> rows`, rows);
+                    if (Array.isArray(rows)) {
+                        let results = {};
+                        rows.forEach((obj) => {
+                            Object.assign(results, { [obj.metaKey]: obj.metaValue });
+                        });
+                    }
+                    return '';
+                }
             }
-            else {
-                const keys = key.reduce(function (cl, a, currIndex, arr) {
-                    return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
-                }, "");
-                const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
-                const rows = yield this.pool.query(sql);
-                console.log(`LOG: Metas -> get -> rows`, rows);
-                return 0;
+            catch (error) {
+                console.log(error);
+                return '';
             }
+            return '';
         });
     }
 }

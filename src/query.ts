@@ -27,39 +27,41 @@ class QueryHub {
 
 class Metas {
   constructor(private table: string, private pool: Pool) {}
-  async get(key: string|string[]) {
-    // get single value
-    if ( ! Array.isArray(key) ) {
-      const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
-      const result = await this.pool.query(sql);
-      console.dir(result);
-      console.log(result.values)
-      
-    } 
-    // get multi value
-    else {
-      const keys = key.reduce(
-        function (cl, a, currIndex, arr) {
-          return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
-        },
-        ""
-      );
-      type meta = {
-        metaKey: string,
-        metaValue: string|number
-      };
+  async get(key: string|string[]): Promise<string> {
+    try {
+      // get single value
+      if ( ! Array.isArray(key) ) {
+        const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
+        let rows = await this.pool.query(sql);
+        if ( Array.isArray(rows) ) {
+          return rows[0].metaValue
+        }
+      } 
+      // get multi value
+      else {
+        const keys = key.reduce(
+          function (cl, a, currIndex, arr) {
+            return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
+          },
+          ""
+        );
+        const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
+        const rows = await this.pool.query(sql);
+        console.log(`LOG: Metas -> get -> rows`, rows);
+        if (Array.isArray(rows)) {
+          let results = {};
+          rows.forEach((obj) => {
+            Object.assign(results, {[obj.metaKey]: obj.metaValue});
+          });
+        }
 
-      const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
-      const rows = await this.pool.query(sql);
-			console.log(`LOG: Metas -> get -> rows`, rows);
-      
-      // let results = {};
-      // rows.forEach((obj) => {
-      //   Object.assign(results, {[obj.metaKey]: obj.metaValue});
-      // });
-
-      return 0;
+        return '';
+      }
+    } catch (error) {
+      console.log(error);
+      return '';
     }
+    return '';
   }
 
 }
