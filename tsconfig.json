@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "removeComments": true, // 최종 js파일에는 comment를 지운다
+    "module": "commonjs", // module 설정
+    "sourceMap": true, // sourcemap사용
+    "target": "es6", // ts -> es6문법의 js파일로 변환. ie빼고는 현대 브라우저에서 다 지원
+    "strict": true, // 타입 검사를 아주 엄격하게 한다. 이렇게 해야 typescript쓰는 맛이 난다
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./dist/server/"
+  },
+  "files": [
+    "./src/index.ts",
+  ],
+  "exclude": [
+    "node_modules", // node_moduels 폴더안에 있는것들은 변환X
+  ]
+}
