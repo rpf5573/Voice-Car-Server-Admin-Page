@@ -11,6 +11,7 @@ import * as express from 'express';
 const router = express.Router();
 import * as bodyParser from 'body-parser';
 import multer from 'multer';
+import adminBackend from './admin/admin-back/index';
 
 // mysql
 import pool from './database';
@@ -22,3 +23,10 @@ queryHub.metas.get("map");
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan('combined', { stream: accessLogStream }));
+adminBackend(app, queryHub);
+
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+  console.log(`Server is running in http://localhost:${PORT}`)
+})

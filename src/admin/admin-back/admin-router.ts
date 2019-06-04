@@ -2,7 +2,7 @@ import * as fs from 'fs-extra';
 import { Express, RequestHandler } from 'express';
 import * as path from 'path';
 import QueryHub from '../../query';
-import '../../@types/index';
+import '../../types';
 import template from '../admin-client/template';
 
 export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
@@ -17,7 +17,7 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
     }
     // let initialSettings = await QH.getInitialState('admin');
     await QH.test();
-    let document = template(initialSettings, srcPath, process.env.DCV);
-    return res.set('Content-Type', 'text/html').end(document);
+    // let document = template(initialSettings, srcPath, process.env.DCV);
+    // return res.set('Content-Type', 'text/html').end(document);
   });
 }

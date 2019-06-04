@@ -1,7 +1,7 @@
-import fs from 'fs-extra';
+import * as fs from 'fs-extra';
 import { Express } from 'express';
-import path from 'path';
-import multer from 'multer';
+import * as path from 'path';
+import * as multer from 'multer';
 import QueryHub from '../../query';
 import adminRouter from './admin-router';
 

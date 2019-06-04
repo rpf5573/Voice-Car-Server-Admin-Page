@@ -1,7 +1,7 @@
 import utils from './utils/server';
 import constants from './utils/constants';
 import { Pool, Query } from 'mysql';
-import './@types/index';
+import './types';
 
 class QueryHub {
   public metas: Metas
@@ -33,6 +33,8 @@ class Metas {
       const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
       const result = await this.pool.query(sql);
       console.dir(result);
+      console.log(result.values)
+      
     } 
     // get multi value
     else {

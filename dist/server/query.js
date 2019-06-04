@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const constants_1 = require("./utils/constants");
-require("./@types/index");
+require("./types");
 class QueryHub {
     constructor(pool) {
         this.pool = pool;
@@ -45,6 +45,7 @@ class Metas {
                 const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
                 const result = yield this.pool.query(sql);
                 console.dir(result);
+                console.log(result.values);
             }
             else {
                 const keys = key.reduce(function (cl, a, currIndex, arr) {
