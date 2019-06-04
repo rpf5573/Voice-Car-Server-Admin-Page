@@ -1,15 +1,15 @@
 // utils
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 
 // error log
-import morgan from 'morgan';
+import * as morgan from 'morgan';
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
 
 // server
-import express from 'express';
+import * as express from 'express';
 const router = express.Router();
-import bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser';
 import multer from 'multer';
 
 // mysql

@@ -6,20 +6,19 @@ import './@types/index';
 class QueryHub {
   public metas: Metas
   public teamPasswords: TeamPasswords
-  // public points: Points
-  // public postInfos: PostInfos
-  // public uploads: Uploads
   constructor(private pool: Pool) {
     const prefix = `${constants.PREFIX}_`;
     this.metas = new Metas(constants.DB_TABLES.metas, pool);
     this.teamPasswords = new TeamPasswords(constants.DB_TABLES.teamPasswords, pool);
+  }
+  async test() {
+    this.metas.get('map');
   }
   async getInitialState() {
     var teamCount = await this.teamPasswords.getTeamCount();
     var teamPasswords = await this.teamPasswords.getAll();
     var metas = await this.metas.get(['companyImage', 'map', 'adminPasswords']);
     return {
-      ...metas,
       teamPasswords,
       teamCount,
     };
@@ -33,9 +32,7 @@ class Metas {
     if ( ! Array.isArray(key) ) {
       const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
       const result = await this.pool.query(sql);
-			if ( result.values && result.values.length > 0 ) {
-        return (result.values[0] as Admin.MetaTableResult).metaValue;
-      }
+      console.dir(result);
     } 
     // get multi value
     else {

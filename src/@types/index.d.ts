@@ -1,8 +1,6 @@
 // from : https://stackoverflow.com/questions/41285211/overriding-interface-property-type-defined-in-typescript-d-ts-file
 // 속성을 override할 수 있다
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
-type Merge<M, N> = Omit<M, Extract<keyof M, keyof N>> & N;
-
 interface Window { __PRELOADED_STATE__: Admin.InitialStateFromDB }
 declare namespace Admin {
   type TeamPassword = {
