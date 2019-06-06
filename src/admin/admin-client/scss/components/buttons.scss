@@ -1,0 +1,18 @@
+.load-files-btn {
+  position: fixed;
+  right: 20px;
+  bottom: 70px;
+  width: 150px;
+
+  cursor: pointer;
+}
+
+.open-post-info-warehouse {
+  @extend .load-files-btn ;
+  bottom: 120px;
+}
+
+.open-media-files-page {
+  @extend .load-files-btn ;
+  bottom: 20px;
+}
