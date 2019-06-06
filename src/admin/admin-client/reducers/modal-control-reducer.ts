@@ -1,6 +1,7 @@
 import { OPEN_MODAL, TOGGLE_MENU_BTNS, CLOSE_MODAL } from '../actions/types';
+import '../../../types';
 
-export default function(state, action) {
+export default function(state: Admin.ModalControl, action) {
   var modalControl = {};
   switch( action.type ) {
     case OPEN_MODAL :

@@ -11,59 +11,48 @@ class QueryHub {
     this.metas = new Metas(constants.DB_TABLES.metas, pool);
     this.teamPasswords = new TeamPasswords(constants.DB_TABLES.teamPasswords, pool);
   }
-  async test() {
-    this.metas.get('map');
-  }
   async getInitialState() {
     var teamCount = await this.teamPasswords.getTeamCount();
     var teamPasswords = await this.teamPasswords.getAll();
-    var metas = await this.metas.get(['companyImage', 'map', 'adminPasswords']);
+    var metas = <{companyImage: string, adminPasswords: string}> await this.metas.get(['companyImage', 'adminPasswords']);
     return {
       teamPasswords,
       teamCount,
+      companyImage: metas.companyImage,
+      adminPasswords: JSON.parse(metas.adminPasswords),
     };
   }
 }
 
 class Metas {
   constructor(private table: string, private pool: Pool) {}
-  async get(key: string|string[]): Promise<string> {
-    try {
-      // get single value
-      if ( ! Array.isArray(key) ) {
-        const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
-        let rows = await this.pool.query(sql);
-        if ( Array.isArray(rows) ) {
-          return rows[0].metaValue
-        }
-      } 
-      // get multi value
-      else {
-        const keys = key.reduce(
-          function (cl, a, currIndex, arr) {
-            return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
-          },
-          ""
-        );
-        const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
-        const rows = await this.pool.query(sql);
-        console.log(`LOG: Metas -> get -> rows`, rows);
-        if (Array.isArray(rows)) {
-          let results = {};
-          rows.forEach((obj) => {
-            Object.assign(results, {[obj.metaKey]: obj.metaValue});
-          });
-        }
+  async get(key: string|string[]): Promise<string|{[key: string]: string}> {
+    // get single value
+    if ( ! Array.isArray(key) ) {
+      const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
+      let rows = await this.pool.query(sql);
+      let result = (rows as any) as Array<{metaValue: string}>
+      return result[0].metaValue
+    } 
+    // get multi value
+    else {
+      const keys = key.reduce(
+        function (cl, a, currIndex, arr) {
+          return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
+        },
+        ""
+      );
+      const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
+      const rows = (await this.pool.query(sql) as any) as Array<{metaKey: string, metaValue: string}>;
+      console.log(`LOG: Metas -> get -> rows`, rows);
+      let results = {};
+      rows.forEach((obj) => {
+        Object.assign(results, {[obj.metaKey]: obj.metaValue});
+      });
 
-        return '';
-      }
-    } catch (error) {
-      console.log(error);
-      return '';
+      return results;
     }
-    return '';
   }
-
 }
 
 class TeamPasswords {
@@ -71,13 +60,14 @@ class TeamPasswords {
     this.table = table;
     this.mysql = mysql;
   }
-  async getAll(until = false) {
+  async getAll(until: number = 0) {
     let sql = `SELECT * FROM ${this.table} ORDER BY team`;
     if ( until ) {
       sql = `SELECT * FROM ${this.table} WHERE team <= ${until} ORDER BY team`;
     }
-    const result = await this.mysql.query(sql);
-    return result;
+    const rows = (await this.mysql.query(sql) as any) as Array<Admin.TeamPassword>;
+    console.log(`getAll ${rows}`);
+    return rows;
   }
   async update(teamPasswords: Admin.TeamPassword[]) {
     var values = "";
@@ -92,10 +82,8 @@ class TeamPasswords {
   }
   async getTeamCount(): Promise<number> {
     const sql = `SELECT COUNT(password) as team_count FROM ${this.table} WHERE password IS NOT NULL and password != 0`;
-    const result: Query = await this.mysql.query(sql);
-    if ( result.values && result.values.length > 0 ) {
-      return parseInt(result.values[0]);
-    }
+    const rows = await this.mysql.query(sql);
+    console.log(`getTeamCount : ${rows}`);
     return 0;
   }
   async reset() {
@@ -105,8 +93,5 @@ class TeamPasswords {
   }
 }
 
-// class Points {
-
-// }
 
 export default QueryHub;

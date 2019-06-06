@@ -1,6 +1,7 @@
 import { UPDATE_TEAM_PASSWORDS, UPDATE_TEAM_COUNT } from '../actions/types';
+import '../../../types';
 
-export default function(state, action) {
+export default function(state: Admin.TeamSettings, action) {
   switch( action.type ) {
     case UPDATE_TEAM_PASSWORDS :
       return Object.assign({}, state, {
