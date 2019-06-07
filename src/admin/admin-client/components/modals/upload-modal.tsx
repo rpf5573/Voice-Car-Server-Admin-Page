@@ -22,7 +22,6 @@ type States = {
   backdrop: boolean,
 }
 class UploadModal extends React.Component<Props, States> {
-
   constructor(props) {
     super(props);
     this.close = this.close.bind(this);

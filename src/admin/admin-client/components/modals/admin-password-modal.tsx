@@ -12,7 +12,8 @@ type Props = {
   activeModalClassName: string,
   className: string,
   admin: string,
-  assist: string
+  assist: string,
+  updateAdminPasswords: (passwords: Admin.AdminPassword) => void
 }
 type States = {
   backdrop: boolean,
@@ -52,6 +53,7 @@ class AdminPasswordModal extends React.Component<Props, States> {
       }
     };
     utils.simpleAxios(axios, config).then(() => {
+      this.props.updateAdminPasswords(config.data.adminPasswords);
       alert( '성공' );
       if ( this.adminInput.current.value ) {
         this.adminInput.current.placeholder = this.adminInput.current.value;

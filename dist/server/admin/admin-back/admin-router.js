@@ -8,8 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const fs = require("fs-extra");
+const path = require("path");
 require("../../types");
 const template_1 = require("../admin-client/template");
+const constants_1 = require("../../utils/constants");
 exports.default = (app, uploadHandler, QH) => {
     app.get('/admin', (req, res) => __awaiter(this, void 0, void 0, function* () {
         const srcPath = {
@@ -23,6 +26,75 @@ exports.default = (app, uploadHandler, QH) => {
         let initialSettings = yield QH.getInitialState();
         let document = template_1.default(initialSettings, srcPath, process.env.DCV);
         return res.set('Content-Type', 'text/html').end(document);
+    }));
+    app.post('/admin/uploads', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        uploadHandler(req, res, (err) => {
+            if (err) {
+                console.log('upload err : ', err);
+                res.status(201).send(err);
+            }
+            else {
+                if (req.files == undefined) {
+                    res.status(201).json({
+                        error: '파일이 없습니다'
+                    });
+                }
+                else {
+                    const files = req.files;
+                    console.log(files);
+                    if (files.companyImage !== undefined) {
+                        console.log(files.companyImage[0]);
+                        QH.metas.update('companyImage', files.companyImage[0].originalname);
+                    }
+                    res.sendStatus(201);
+                }
+            }
+        });
+    }));
+    app.post('/admin/team-settings/passwords', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        let teamPasswords = req.body.teamPasswords;
+        if (teamPasswords.length > 0) {
+            try {
+                yield QH.teamPasswords.update(teamPasswords);
+                let newTeamPasswords = yield QH.teamPasswords.getAll();
+                return res.status(201).json(newTeamPasswords);
+            }
+            catch (error) {
+                console.log(error);
+                return res.status(201).json({ error: constants_1.default.ERROR.unknown });
+            }
+        }
+        return res.status(201).json({
+            error: '팀 패스워드가 입력되지 않았습니다'
+        });
+    }));
+    app.post('/admin/admin-passwords/passwords', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield QH.metas.update('adminPasswords', JSON.stringify(req.body.adminPasswords));
+            return res.sendStatus(201);
+        }
+        catch (error) {
+            console.log(error);
+            return res.status(201).json({
+                error: constants_1.default.ERROR.unknown
+            });
+        }
+    }));
+    app.post('/admin/reset', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        let pw = req.body.resetPassword;
+        if (pw && pw == 'discovery_reset') {
+            try {
+                yield QH.reset();
+                yield fs.remove(path.resolve(__dirname, `../../public/admin/uploads/`));
+                return res.sendStatus(201);
+            }
+            catch (e) {
+                return res.sendStatus(401);
+            }
+        }
+        return res.status(201).json({
+            error: '잘못된 접근입니다'
+        });
     }));
 };
 //# sourceMappingURL=admin-router.js.map

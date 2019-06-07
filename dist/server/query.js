@@ -30,6 +30,12 @@ class QueryHub {
             };
         });
     }
+    reset() {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.metas.reset();
+            this.teamPasswords.reset();
+        });
+    }
 }
 class Metas {
     constructor(table, pool) {
@@ -57,6 +63,29 @@ class Metas {
                 });
                 return results;
             }
+        });
+    }
+    update(key, value) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sql = `UPDATE ${this.table} SET metaValue = '${value}' WHERE metaKey = '${key}'`;
+            if (value == null) {
+                sql = `UPDATE ${this.table} SET metaValue = NULL WHERE metaKey = '${key}'`;
+            }
+            const result = yield this.pool.query(sql);
+            return result;
+        });
+    }
+    reset() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let sql = `UPDATE ${this.table} SET metaValue = 'https://via.placeholder.com/150' WHERE metaKey IN ('companyImage')`;
+            let result = yield this.pool.query(sql);
+            const adminPasswords = {
+                admin: '1234',
+                assist: '4321'
+            };
+            sql = `UPDATE ${this.table} SET metaValue='${JSON.stringify(adminPasswords)}' WHERE metaKey='adminPasswords'`;
+            result = yield this.pool.query(sql);
+            return result;
         });
     }
 }

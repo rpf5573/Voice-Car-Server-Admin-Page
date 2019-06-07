@@ -22,6 +22,10 @@ class QueryHub {
       adminPasswords: JSON.parse(metas.adminPasswords),
     };
   }
+  async reset() {
+    this.metas.reset();
+    this.teamPasswords.reset();
+  }
 }
 
 class Metas {
@@ -32,7 +36,7 @@ class Metas {
       const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
       let rows = await this.pool.query(sql);
       let result = (rows as any) as Array<{metaValue: string}>
-      return result[0].metaValue
+      return result[0].metaValue;
     } 
     // get multi value
     else {
@@ -52,6 +56,28 @@ class Metas {
 
       return results;
     }
+  }
+  async update(key: string, value: string) {
+    let sql = `UPDATE ${this.table} SET metaValue = '${value}' WHERE metaKey = '${key}'`;
+    if ( value == null ) {
+      sql = `UPDATE ${this.table} SET metaValue = NULL WHERE metaKey = '${key}'`;
+    }
+    const result = await this.pool.query(sql);
+    return result;
+  }
+  async reset() {
+    let sql = `UPDATE ${this.table} SET metaValue = 'https://via.placeholder.com/150' WHERE metaKey IN ('companyImage')`;
+    let result = await this.pool.query(sql);
+
+    // admin passwords
+    const adminPasswords = {
+      admin: '1234',
+      assist: '4321'
+    }
+    sql = `UPDATE ${this.table} SET metaValue='${JSON.stringify(adminPasswords)}' WHERE metaKey='adminPasswords'`;
+    result = await this.pool.query(sql);
+
+    return result;
   }
 }
 
@@ -92,6 +118,5 @@ class TeamPasswords {
     return result;
   }
 }
-
 
 export default QueryHub;

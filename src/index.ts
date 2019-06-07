@@ -18,12 +18,14 @@ import pool from './database';
 import QueryHub from './query';
 
 const queryHub = new QueryHub(pool);
-queryHub.metas.get("map");
+queryHub.metas.get("companyImage");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan('combined', { stream: accessLogStream }));
 adminBackend(app, queryHub);
+
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 8080;
 
