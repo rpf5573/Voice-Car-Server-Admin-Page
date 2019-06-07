@@ -13,7 +13,7 @@ export default class MainMenu extends Component {
       {label: "관리자 비밀번호", className: "admin-passwords"},
       {label: "초기화", className: "reset"},
     ];
-    var tagList = [];
+    var tagList: JSX.Element[] = [];
     menuList.forEach((menuItem) => {
       tagList.push(
         <MainMenuItem className={menuItem.className} label={menuItem.label} key={menuItem.className}></MainMenuItem>

@@ -37,7 +37,7 @@ class AdminPasswordModal extends React.Component<Props, States> {
   async handleFormSubmit(e) {
     e.preventDefault();
 
-    if ( !this.adminInput.current.value && !this.assistInput.current.value ) {
+    if ( !this.adminInput!.current!.value && !this.assistInput!.current!.value ) {
       alert("ERROR : 비밀번호를 입력해 주시기 바랍니다");
       return;
     }
@@ -46,12 +46,12 @@ class AdminPasswordModal extends React.Component<Props, States> {
       url: '/admin/admin-passwords/passwords',
       data: {
         adminPasswords: {
-          admin: (this.adminInput.current.value ? this.adminInput.current.value : this.props.admin),
-          assist: (this.assistInput.current.value ? this.assistInput.current.value : this.props.assist )
+          admin: (this.adminInput!.current!.value ? this.adminInput!.current!.value : this.props.admin),
+          assist: (this.assistInput!.current!.value ? this.assistInput!.current!.value : this.props.assist )
         }
       }
     };
-    utils.simpleAxios(axios, config).then((response: AxiosResponse) => {
+    utils.simpleAxios(axios, config).then(() => {
       alert( '성공' );
       if ( this.adminInput.current.value ) {
         this.adminInput.current.placeholder = this.adminInput.current.value;

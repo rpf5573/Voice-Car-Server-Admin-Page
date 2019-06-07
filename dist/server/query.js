@@ -17,19 +17,16 @@ class QueryHub {
         this.metas = new Metas(constants_1.default.DB_TABLES.metas, pool);
         this.teamPasswords = new TeamPasswords(constants_1.default.DB_TABLES.teamPasswords, pool);
     }
-    test() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.metas.get('map');
-        });
-    }
     getInitialState() {
         return __awaiter(this, void 0, void 0, function* () {
             var teamCount = yield this.teamPasswords.getTeamCount();
             var teamPasswords = yield this.teamPasswords.getAll();
-            var metas = yield this.metas.get(['companyImage', 'map', 'adminPasswords']);
+            var metas = yield this.metas.get(['companyImage', 'adminPasswords']);
             return {
                 teamPasswords,
                 teamCount,
+                companyImage: metas.companyImage,
+                adminPasswords: JSON.parse(metas.adminPasswords),
             };
         });
     }
@@ -41,35 +38,25 @@ class Metas {
     }
     get(key) {
         return __awaiter(this, void 0, void 0, function* () {
-            try {
-                if (!Array.isArray(key)) {
-                    const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
-                    let rows = yield this.pool.query(sql);
-                    if (Array.isArray(rows)) {
-                        return rows[0].metaValue;
-                    }
-                }
-                else {
-                    const keys = key.reduce(function (cl, a, currIndex, arr) {
-                        return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
-                    }, "");
-                    const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
-                    const rows = yield this.pool.query(sql);
-                    console.log(`LOG: Metas -> get -> rows`, rows);
-                    if (Array.isArray(rows)) {
-                        let results = {};
-                        rows.forEach((obj) => {
-                            Object.assign(results, { [obj.metaKey]: obj.metaValue });
-                        });
-                    }
-                    return '';
-                }
+            if (!Array.isArray(key)) {
+                const sql = `SELECT metaValue FROM ${this.table} WHERE metaKey = '${key}'`;
+                let rows = yield this.pool.query(sql);
+                let result = rows;
+                return result[0].metaValue;
             }
-            catch (error) {
-                console.log(error);
-                return '';
+            else {
+                const keys = key.reduce(function (cl, a, currIndex, arr) {
+                    return cl + (currIndex == 0 ? "" : ",") + "'" + a + "'";
+                }, "");
+                const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
+                const rows = yield this.pool.query(sql);
+                console.log(`LOG: Metas -> get -> rows`, rows);
+                let results = {};
+                rows.forEach((obj) => {
+                    Object.assign(results, { [obj.metaKey]: obj.metaValue });
+                });
+                return results;
             }
-            return '';
         });
     }
 }
@@ -80,14 +67,15 @@ class TeamPasswords {
         this.table = table;
         this.mysql = mysql;
     }
-    getAll(until = false) {
+    getAll(until = 0) {
         return __awaiter(this, void 0, void 0, function* () {
             let sql = `SELECT * FROM ${this.table} ORDER BY team`;
             if (until) {
                 sql = `SELECT * FROM ${this.table} WHERE team <= ${until} ORDER BY team`;
             }
-            const result = yield this.mysql.query(sql);
-            return result;
+            const rows = yield this.mysql.query(sql);
+            console.log(`getAll ${rows}`);
+            return rows;
         });
     }
     update(teamPasswords) {
@@ -106,10 +94,8 @@ class TeamPasswords {
     getTeamCount() {
         return __awaiter(this, void 0, void 0, function* () {
             const sql = `SELECT COUNT(password) as team_count FROM ${this.table} WHERE password IS NOT NULL and password != 0`;
-            const result = yield this.mysql.query(sql);
-            if (result.values && result.values.length > 0) {
-                return parseInt(result.values[0]);
-            }
+            const rows = yield this.mysql.query(sql);
+            console.log(`getTeamCount : ${rows}`);
             return 0;
         });
     }

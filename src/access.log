@@ -1,0 +1,6 @@
+::ffff:127.0.0.1 - - [07/Jun/2019:07:16:22 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+::ffff:127.0.0.1 - - [07/Jun/2019:07:16:25 +0000] "GET /robots.txt HTTP/1.1" 404 149 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+::ffff:127.0.0.1 - - [07/Jun/2019:07:16:47 +0000] "GET /admin HTTP/1.1" 200 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+::ffff:127.0.0.1 - - [07/Jun/2019:07:16:47 +0000] "GET /admin/bundle.js HTTP/1.1" 404 154 "http://localhost:8081/admin" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+::ffff:127.0.0.1 - - [07/Jun/2019:07:16:47 +0000] "GET /admin/bundle.js HTTP/1.1" 404 154 "http://localhost:8081/admin" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"
+::ffff:127.0.0.1 - - [07/Jun/2019:07:16:47 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:8081/admin" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"

@@ -5,15 +5,17 @@ import utils from '../../../../utils/client';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, TabContent, TabPane, Nav, NavItem, NavLink, Row, Col, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
 import { closeModal, updateTeamPasswords, updateTeamCount } from '../../actions';
 import axios from 'axios';
-import {AxiosResponse} from 'axios';
+import {AxiosResponse, AxiosRequestConfig} from 'axios';
 import '../../../../types';
+import constants from '../../../../utils/constants';
 
 type Props = {
   closeModal: () => void,
   activeModalClassName: string,
   className: string,
   updateTeamPasswords: (teamPasswords: Admin.TeamPassword[]) => void,
-  updateTeamCount: (teamCount: number) => void
+  updateTeamCount: (teamCount: number) => void,
+  teamPasswords: Admin.TeamPassword[]
 }
 type States = {
   activeTab: string,
@@ -154,7 +156,7 @@ class TeamSettingModal extends React.Component<Props, States> {
         }
       }
 
-      const config = {
+      const config: AxiosRequestConfig = {
         method: 'POST',
         url: '/admin/team-settings/passwords',
         data: {
@@ -162,28 +164,40 @@ class TeamSettingModal extends React.Component<Props, States> {
         }
       };
 
-      utils.simpleAxios(axios, config).then((response: AxiosResponse) => {
-        let newTeamPasswords = response.data;
-        for ( var i = 0; i < teamPasswords.length; i++ ) {
-          let index = teamPasswords[i].team - 1;
-          let value = teamPasswords[i].password;
-          this.passwordInputFields[index].placeholder = value;
-          this.passwordInputFields[index].value = '';
-        }
-
-        var teamCount = this.passwordInputFields.reduce((accumulator, input, index, array)=>{
-          let val = parseInt(input.placeholder);
-          if ( !isNaN(val) && val != 0 ) {
-            accumulator++;
+      axios.request<Admin.TeamPassword[] & { error: string }>(config).then(response => {
+        if ( response.status == 201 ) {
+          if (response.data.error) {
+            alert(response.data.error);
+            return;
           }
-          return accumulator;
-        }, 0);
+          const { data: newTeamPasswords } = response;
+          for ( var i = 0; i < teamPasswords.length; i++ ) {
+            let index = teamPasswords[i].team - 1;
+            let value = teamPasswords[i].password;
+            this.passwordInputFields[index].placeholder = value;
+            this.passwordInputFields[index].value = '';
+          }
 
-        this.props.updateTeamPasswords(newTeamPasswords);
-        this.props.updateTeamCount(teamCount);
+          var teamCount = this.passwordInputFields.reduce((accumulator, input, index, array)=>{
+            let val = parseInt(input.placeholder);
+            if ( !isNaN(val) && val != 0 ) {
+              accumulator++;
+            }
+            return accumulator;
+          }, 0);
 
-        alert( "성공" );
-      });
+          this.props.updateTeamPasswords(newTeamPasswords);
+          this.props.updateTeamCount(teamCount);
+
+          alert( "성공" );
+        } else {
+          alert(constants.ERROR.unknown);
+          console.error( constants.ERROR.unknown );
+        }
+      }).catch(err => {
+        console.error(err);
+        alert("알수없는 에러가 발생했습니다");
+      })
     }
   }
 

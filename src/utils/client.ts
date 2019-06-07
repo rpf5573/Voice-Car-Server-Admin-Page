@@ -11,12 +11,12 @@ function getCurrentTimeInSeconds() {
 
 function secondToMinute(second) {
   if ( second >= 0) {
-    let m = parseInt(second/60);
-    let s = parseInt(second%60);
+    let m = Math.floor(second/60);
+    let s = Math.floor(second%60);
     return `${m}분 ${s}초`;
   } else {
-    let m = parseInt(-second/60);
-    let s = parseInt(-second%60);
+    let m = Math.floor(-second/60);
+    let s = Math.floor(-second%60);
     return `-${m}분 ${s}초`;
   }
 }

@@ -26,9 +26,13 @@ const DB_TABLES = {
   postInfos: `${PREFIX}_postInfos`,
   uploads: `${PREFIX}_uploads`,
 }
+const IMAGE = 'image';
+const VIDEO = 'video';
 export default {
   teamColors,
   ERROR,
   PREFIX,
-  DB_TABLES
+  DB_TABLES,
+  IMAGE,
+  VIDEO
 }
