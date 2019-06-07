@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import utils from '../../../../utils/client';
 import { Button, Modal, ModalHeader, ModalBody, Row, Col, FormGroup, Label } from 'reactstrap';

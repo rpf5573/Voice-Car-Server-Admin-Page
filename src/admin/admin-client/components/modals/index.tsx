@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import TeamSettingModal from './team-setting-modal';
 import UploadModal from './upload-modal';
 import AdminPasswordModal from './admin-password-modal';
 import ResetModal from './reset-modal';
 
-class Modals extends Component {
+class Modals extends React.Component {
   state = {  }
   render() { 
     return (

@@ -1,5 +1,5 @@
 // react & redux
-import React, { Component } from 'react';
+import * as React from 'react';
 
 // components
 import MainMenu from './main-menu';
@@ -9,7 +9,7 @@ import Modals from './modals';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../scss/style.scss';
 
-class App extends Component {
+class App extends React.Component {
   render() {
     return (
       <div className="page">

@@ -1,7 +1,7 @@
 import { UPDATE_ADMIN_PASSWORDS } from '../actions/types';
 import '../../../types';
 
-export default function(state: Admin.AdminPassword, action) {
+export default function(state: Admin.AdminPassword = null, action) {
   switch( action.type ) {
     case UPDATE_ADMIN_PASSWORDS :
       return Object.assign({}, state, <Admin.AdminPassword>action.payload);

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import MainMenuItem from './main-menu-item';
 
-export default class MainMenu extends Component {
+export default class MainMenu extends React.Component {
   constructor(props) {
     super(props);
   }

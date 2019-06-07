@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import { openModal, toggleMenuBtns } from '../actions/modal-control-actions';
@@ -11,7 +11,7 @@ type Props = {
   openModal: (className: string) => void
 }
 type States = {}
-class MainMenuItem extends Component<Props, States> {
+class MainMenuItem extends React.Component<Props, States> {
   constructor(props) {
     super(props);
     this.onClickBtn = this.onClickBtn.bind(this);
