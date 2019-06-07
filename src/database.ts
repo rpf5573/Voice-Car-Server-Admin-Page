@@ -9,6 +9,11 @@ let config = {
   database: `voice_car`
 }
 
+if ( process.env.NODE_ENV == 'production' ) {
+  config.user = 'rpf5573';
+  config.password = 'thoumas138';
+}
+
 const pool: Pool = createPool(config);
 pool.query = util.promisify(pool.query) as any;
 
