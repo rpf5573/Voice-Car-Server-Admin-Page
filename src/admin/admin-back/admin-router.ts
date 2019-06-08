@@ -8,6 +8,7 @@ import constants from '../../utils/constants';
 
 export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
   app.get('/admin', async (req, res) => {
+    console.log('access to admin page');
     const srcPath: Admin.SourcePath = {
       style: 'style.css',
       js: 'bundle.js'
