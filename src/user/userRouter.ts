@@ -3,11 +3,13 @@ import QueryHub from '../query';
 export default (app:Express, QH: QueryHub) => {
   app.post('/user/login', async (req, res) => {
     const pw = req.body.password;
+    let team = null;
     try {
       let teamPasswords = await QH.teamPasswords.getAll();
       for(let i = 0; i < teamPasswords.length; i++) {
         if (pw == teamPasswords[i].password) {
-          return res.status(201);
+          team = teamPasswords[i].team;
+          return res.status(201).json({team});
         }
       }
     } catch(err) {
