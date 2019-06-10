@@ -15,5 +15,6 @@ export default (app:Express, QH: QueryHub) => {
     } catch(err) {
       return res.sendStatus(401);
     }
+    return res.status(201).json({error: "일치하는 비밀번호가 없습니다"});
   });
 }
