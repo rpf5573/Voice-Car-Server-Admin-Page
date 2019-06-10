@@ -12,6 +12,7 @@ const router = express.Router();
 import * as bodyParser from 'body-parser';
 import multer from 'multer';
 import adminBackend from './admin/admin-back/index';
+import userBackend from './user/userRouter';
 
 // mysql
 import pool from './database';
@@ -24,6 +25,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan('combined', { stream: accessLogStream }));
 adminBackend(app, queryHub);
+userBackend(app, queryHub);
 
 app.use(express.static('public'));
 
