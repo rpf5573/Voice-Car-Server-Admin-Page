@@ -19,6 +19,6 @@ export default (app:Express, QH: QueryHub) => {
     return res.status(201).json({error: "비밀번호를 다시 확인해주세요"});
   });
   app.get('/user/initialState', async (req, res) => {
-    return res.status(201).json({ willUseVoice: true });
+    return res.status(201).json({ willUseVoice: false });
   });
 }
