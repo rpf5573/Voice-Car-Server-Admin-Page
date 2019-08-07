@@ -9,6 +9,10 @@ let config = {
     password: 'root',
     database: `voice_car`
 };
+if (process.env.NODE_ENV == 'production') {
+    config.user = 'rpf5573';
+    config.password = 'thoumas138';
+}
 const pool = mysql_1.createPool(config);
 pool.query = util.promisify(pool.query);
 exports.default = pool;

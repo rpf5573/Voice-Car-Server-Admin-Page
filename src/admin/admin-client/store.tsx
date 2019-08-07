@@ -16,6 +16,9 @@ export default function configureStore(initialSettings) {
       activeModalClassName: "",
       activeMenuBtnClassName: ""
     },
+    optionSettings: {
+      rcUsageState: initialSettings.rcUsageState
+    },
     uploads: {
       companyImage: initialSettings.companyImage,
     },

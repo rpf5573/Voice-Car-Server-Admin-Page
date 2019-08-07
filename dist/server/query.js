@@ -21,12 +21,13 @@ class QueryHub {
         return __awaiter(this, void 0, void 0, function* () {
             var teamCount = yield this.teamPasswords.getTeamCount();
             var teamPasswords = yield this.teamPasswords.getAll();
-            var metas = yield this.metas.get(['companyImage', 'adminPasswords']);
+            var metas = yield this.metas.get(['companyImage', 'adminPasswords', 'rcUsageState']);
             return {
                 teamPasswords,
                 teamCount,
                 companyImage: metas.companyImage,
                 adminPasswords: JSON.parse(metas.adminPasswords),
+                rcUsageState: parseInt(metas.rcUsageState)
             };
         });
     }

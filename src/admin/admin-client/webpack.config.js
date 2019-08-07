@@ -54,6 +54,10 @@ module.exports = {
         pathRewrite: {'^/uploads' : '/admin/uploads/'},
         changeOrigin: true
       },
+      '/admin': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
+      }
     }
   },
   resolve: {

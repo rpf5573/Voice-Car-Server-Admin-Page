@@ -94,4 +94,16 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
       error: '잘못된 접근입니다'
     });
   });
+
+  app.post('/admin/option-settings/rcUsageState', async(req, res) => {
+    try {
+      console.log(req.body.rcUsageState);
+      await QH.metas.update('rcUsageState', req.body.rcUsageState);
+      return res.sendStatus(201);
+    } catch(error) {
+      return res.status(201).json({
+        error: constants.ERROR.unknown
+      });
+    }
+  });
 }

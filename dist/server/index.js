@@ -8,6 +8,7 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const index_1 = require("./admin/admin-back/index");
+const userRouter_1 = require("./user/userRouter");
 const database_1 = require("./database");
 const query_1 = require("./query");
 const queryHub = new query_1.default(database_1.default);
@@ -16,6 +17,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan('combined', { stream: accessLogStream }));
 index_1.default(app, queryHub);
+userRouter_1.default(app, queryHub);
 app.use(express.static('public'));
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

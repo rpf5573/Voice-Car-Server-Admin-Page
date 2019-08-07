@@ -24,7 +24,7 @@ exports.default = (app, uploadHandler, QH) => {
             srcPath.js = 'admin/bundle.js';
         }
         let initialSettings = yield QH.getInitialState();
-        let document = template_1.default(initialSettings, srcPath, process.env.DCV);
+        let document = template_1.default(initialSettings, srcPath);
         return res.set('Content-Type', 'text/html').end(document);
     }));
     app.post('/admin/uploads', (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -95,6 +95,18 @@ exports.default = (app, uploadHandler, QH) => {
         return res.status(201).json({
             error: '잘못된 접근입니다'
         });
+    }));
+    app.post('/admin/option-settings/rcUsageState', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            console.log(req.body.rcUsageState);
+            yield QH.metas.update('rcUsageState', req.body.rcUsageState);
+            return res.sendStatus(201);
+        }
+        catch (error) {
+            return res.status(201).json({
+                error: constants_1.default.ERROR.unknown
+            });
+        }
     }));
 };
 //# sourceMappingURL=admin-router.js.map

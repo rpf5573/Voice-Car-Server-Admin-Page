@@ -14,12 +14,13 @@ class QueryHub {
   async getInitialState() {
     var teamCount = await this.teamPasswords.getTeamCount();
     var teamPasswords = await this.teamPasswords.getAll();
-    var metas = <{companyImage: string, adminPasswords: string}> await this.metas.get(['companyImage', 'adminPasswords']);
+    var metas = <{companyImage: string, adminPasswords: string, rcUsageState: string}> await this.metas.get(['companyImage', 'adminPasswords', 'rcUsageState']);
     return {
       teamPasswords,
       teamCount,
       companyImage: metas.companyImage,
       adminPasswords: JSON.parse(metas.adminPasswords),
+      rcUsageState: parseInt(metas.rcUsageState)
     };
   }
   async reset() {

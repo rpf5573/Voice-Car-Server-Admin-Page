@@ -28,7 +28,8 @@ declare namespace Admin {
   }
   interface InitialState {
     teamSettings: TeamSettings,
-    modalControl: ModalControl
+    modalControl: ModalControl,
+    optionSettings: OptionSettings,
     uploads: Uploads,
     adminPasswords: AdminPassword,
   }
@@ -60,5 +61,8 @@ declare namespace Admin {
   }
   type Uploads = {
     companyImage: string
+  }
+  type OptionSettings = {
+    rcUsageState: number
   }
 }

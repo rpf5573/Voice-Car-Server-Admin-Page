@@ -28,11 +28,15 @@ const DB_TABLES = {
 }
 const IMAGE = 'image';
 const VIDEO = 'video';
+const OFF = 0;
+const ON = 1;
 export default {
   teamColors,
   ERROR,
   PREFIX,
   DB_TABLES,
   IMAGE,
-  VIDEO
+  VIDEO,
+  ON,
+  OFF
 }
