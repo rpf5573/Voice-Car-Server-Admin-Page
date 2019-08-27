@@ -228,7 +228,7 @@ class TeamSettingModal extends React.Component<Props, States> {
       <Modal isOpen={ (this.props.activeModalClassName == this.props.className) ? true : false } toggle={this.close} className={this.props.className} size="lg">
         <form id="form-team-settings" onSubmit={this.handleFormSubmit}>
           <ModalHeader toggle={this.close}>
-            <span>팀설정</span>
+            <span>포크봇설정</span>
           </ModalHeader>
           <ModalBody>
             <Nav tabs>

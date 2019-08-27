@@ -8,7 +8,7 @@ export default class MainMenu extends React.Component {
   }
   createMenu() {
     let menuList = [
-      {label: "팀설정", className: "team-settings"},
+      {label: "포크봇설정", className: "team-settings"},
       {label: "이미지설정", className: "uploads"},
       {label: "옵션설정", className: "options"},
       {label: "관리자 비밀번호", className: "admin-passwords"},
