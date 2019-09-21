@@ -13,12 +13,10 @@ declare namespace Admin {
   }
   type AdminPassword = {
     admin: string,
-    assist: string
   }
   enum Role {
     admin = 'admin',
     user = 'user',
-    assist = 'assit'
   }
   type ResultDataRow = {
     team: number,

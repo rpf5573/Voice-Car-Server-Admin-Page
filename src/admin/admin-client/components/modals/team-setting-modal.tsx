@@ -210,7 +210,7 @@ class TeamSettingModal extends React.Component<Props, States> {
             <InputGroup>
               <InputGroupAddon addonType="prepend">
                 <InputGroupText>
-                  {i}
+                  포크봇{i}
                 </InputGroupText>
               </InputGroupAddon>
               <input type="number" min="0" className="form-control password-input" placeholder={passwords[i-1].password} />

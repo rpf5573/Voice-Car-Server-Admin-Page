@@ -10,7 +10,6 @@ type Props = {
   activeModalClassName: string,
   className: string,
   admin: string,
-  assist: string
 }
 type States = {
   backdrop: boolean,

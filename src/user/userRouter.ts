@@ -26,4 +26,8 @@ export default (app:Express, QH: QueryHub) => {
       return res.sendStatus(401);
     }
   });
+  app.get('/command/*', async(req, res) => {
+    console.log( 'command did come' );
+    return res.sendStatus(201);
+  });
 }

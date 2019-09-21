@@ -12,7 +12,6 @@ type Props = {
   activeModalClassName: string,
   className: string,
   admin: string,
-  assist: string,
   companyImage: string,
   uploadImageFile: (fileName: {
     companyImage: string
