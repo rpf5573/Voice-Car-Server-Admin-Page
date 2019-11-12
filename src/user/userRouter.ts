@@ -1,5 +1,6 @@
 import { Express, RequestHandler } from 'express';
 import QueryHub from '../query';
+import constants from '../utils/constants';
 export default (app:Express, QH: QueryHub) => {
   app.post('/user/login', async (req, res) => {
     const pw = req.body.password;
@@ -26,8 +27,26 @@ export default (app:Express, QH: QueryHub) => {
       return res.sendStatus(401);
     }
   });
-  app.get('/command/*', async(req, res) => {
+  app.get('/command/*', async (req, res) => {
     console.log( 'command did come' );
     return res.sendStatus(201);
+  });
+  app.post('/words/getPartWords', async (req, res) => {
+    const partCols = req.body.partCols as Array<string>;
+    const team = req.body.team;
+    try {
+      const result = await QH.words.getPartWords(team, partCols);
+      console.log(result);
+      return res.status(201).json({words: result});
+    } catch (err) {
+      console.error(err);
+      return res.status(201).json({error: constants.ERROR});
+    }
+  });
+  // PartCol = hand_close, hand_open ...
+  // Part = hand, arm ...
+  app.post('/words/insertPartColWords', async (req, res) => {
+    const col = req.body.col;
+    const team = req.body.team;
   });
 }

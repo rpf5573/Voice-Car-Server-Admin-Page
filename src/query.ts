@@ -6,10 +6,11 @@ import './types';
 class QueryHub {
   public metas: Metas
   public teamPasswords: TeamPasswords
+  public words: Words
   constructor(private pool: Pool) {
-    const prefix = `${constants.PREFIX}_`;
     this.metas = new Metas(constants.DB_TABLES.metas, pool);
     this.teamPasswords = new TeamPasswords(constants.DB_TABLES.teamPasswords, pool);
+    this.words = new Words(constants.DB_TABLES.words, pool);
   }
   async getInitialState() {
     var teamCount = await this.teamPasswords.getTeamCount();
@@ -26,6 +27,7 @@ class QueryHub {
   async reset() {
     this.metas.reset();
     this.teamPasswords.reset();
+    this.words.resetToDefault();
   }
 }
 
@@ -116,6 +118,64 @@ class TeamPasswords {
     let sql = `UPDATE ${this.table} SET password = 0`;
     let result = await this.mysql.query(sql);
     return result;
+  }
+}
+
+class Words {
+  private defaultWords: Admin.defaultWords = {
+    hand_open: ['손펴', '손표', '손피라고', '손벽', '손효', '성표', '송평', '손뼉', '송파', '송표', '손뼈', '송편'],
+    hand_close: ['잡아', '자바', '저봐', '자봐', '차바','잡아라', '자바라', '자막', '참아', '쳐바', '전화', '쳐바', '쳐봐', '봐봐'],
+    elbow_open: ['팔펴','팔표', '팔피라고', '팔표', '팔벽', '팔효', '팔벼', '발표', '발펴'],
+    elbow_close: ['접어', '저붜', '자보', '저봐', '줘봐', '줘바', '접포', '초밥', '여보', '초보', '터보', '초봉', '서버', '더워', '전화'],
+    shoulder_open: ['들어', '틀어', '드론', '트럭', '불어', '그럼', '뚫어'],
+    shoulder_close: ['내려', '내려와', '매력', '노력', '매려', '노려', '느려', '재료', '의료'],
+    waist_left: ['왼쪽', '외쪽'],
+    waist_right: ['오른쪽', '어른쪽', '어느쪽'],
+    bottom_go: ['앞으로', '아프로', '아브로', '어그로', '바보'],
+    bottom_go_fast: ['뒤로', '기록', '귀로', '1호', '위로'],
+    bottom_left: ['왼쪽'],
+    bottom_right: ['오른쪽', '어른쪽', '어느쪽'],
+    bottom_back: ['빠르게', '빠르개', '바르게', '바르개', '파르게', '파르개'],
+  };
+  constructor(private table: string, private mysql: Pool) {
+    this.table = table;
+    this.mysql = mysql;
+  }
+  async getAllWords(team: number) {
+    const sql = `SELECT * FROM ${this.table} WHERE team = ${team}`;
+    const rows = await this.mysql.query(sql);
+    console.log(rows);
+    return rows;
+  }
+  async getPartWords(team: number, partCols: Array<string>) {
+    const sql = `SELECT ${partCols.join(',')} FROM ${this.table} WHERE team = ${team}`;
+    const words = await this.mysql.query(sql);
+    console.log(words);
+    return words;
+  }
+  async resetToDefault() {
+    const sql = `UPDATE ${this.table} SET
+    hand_open = '${JSON.stringify(this.defaultWords.hand_open)}',
+    hand_close = '${JSON.stringify(this.defaultWords.hand_close)}', 
+    elbow_open = '${JSON.stringify(this.defaultWords.elbow_open)}', 
+    elbow_close = '${JSON.stringify(this.defaultWords.elbow_close)}', 
+    shoulder_open = '${JSON.stringify(this.defaultWords.shoulder_open)}', 
+    shoulder_close = '${JSON.stringify(this.defaultWords.shoulder_close)}', 
+    waist_left = '${JSON.stringify(this.defaultWords.waist_left)}', 
+    waist_right = '${JSON.stringify(this.defaultWords.waist_right)}', 
+    bottom_go = '${JSON.stringify(this.defaultWords.bottom_go)}', 
+    bottom_go_fast = '${JSON.stringify(this.defaultWords.bottom_go_fast)}', 
+    bottom_left = '${JSON.stringify(this.defaultWords.bottom_left)}', 
+    bottom_right = '${JSON.stringify(this.defaultWords.bottom_right)}', 
+    bottom_back = '${JSON.stringify(this.defaultWords.bottom_back)}' WHERE 1=1;`;
+    console.log('sql : ', sql);
+    const results = await this.mysql.query(sql);
+    return results;
+  }
+  async resetToNull() {
+    const sql = `UPDATE ${this.table} SET hand_open = NULL, hand_close = NULL, elbow_open = NULL, elbow_close = NULL, shoulder_open = NULL, shoulder_close = NULL, waist_left = NULL, waist_right = NULL, bottom_go = NULL, bottom_go_fast = NULL, bottom_left = NULL, bottom_right = NULL, bottom_back = NULL WHERE 1=1;`;
+    const results = await this.mysql.query(sql);
+    return results;
   }
 }
 

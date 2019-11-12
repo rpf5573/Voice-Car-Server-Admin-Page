@@ -63,4 +63,19 @@ declare namespace Admin {
   type OptionSettings = {
     rcUsageState: number
   }
+  type defaultWords = {
+    hand_open: Array<string>,
+    hand_close: Array<string>,
+    elbow_open: Array<string>,
+    elbow_close: Array<string>,
+    shoulder_open: Array<string>,
+    shoulder_close: Array<string>,
+    waist_left: Array<string>,
+    waist_right: Array<string>,
+    bottom_go: Array<string>,
+    bottom_go_fast: Array<string>,
+    bottom_left: Array<string>,
+    bottom_right: Array<string>,
+    bottom_back: Array<string>
+  }
 }

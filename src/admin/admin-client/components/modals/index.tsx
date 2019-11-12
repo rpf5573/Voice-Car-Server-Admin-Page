@@ -4,6 +4,7 @@ import UploadModal from './upload-modal';
 import OptionModal from './option-modal';
 import AdminPasswordModal from './admin-password-modal';
 import ResetModal from './reset-modal';
+import SimilarWordsResetModal from './similar-words-reset-modal';
 
 class Modals extends React.Component {
   state = {  }
@@ -12,7 +13,7 @@ class Modals extends React.Component {
       <div className="modals">
         <TeamSettingModal className="modal--team-settings"></TeamSettingModal>
         <UploadModal className="modal--uploads"></UploadModal>
-        <OptionModal className="modal--options"></OptionModal>
+        <SimilarWordsResetModal className="modal--similar-words-reset"></SimilarWordsResetModal>
         <AdminPasswordModal className="modal--admin-passwords"></AdminPasswordModal>
         <ResetModal className="modal--reset"></ResetModal>
       </div>

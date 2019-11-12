@@ -27,6 +27,7 @@ const DB_TABLES = {
     points: `${PREFIX}_points`,
     postInfos: `${PREFIX}_postInfos`,
     uploads: `${PREFIX}_uploads`,
+    words: `${PREFIX}_words`,
 };
 const IMAGE = 'image';
 const VIDEO = 'video';
