@@ -171,7 +171,6 @@ class Words {
         return __awaiter(this, void 0, void 0, function* () {
             const sql = `SELECT ${partCols.join(',')} FROM ${this.table} WHERE team = ${team}`;
             const words = yield this.mysql.query(sql);
-            console.log(words);
             return words;
         });
     }

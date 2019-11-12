@@ -150,7 +150,6 @@ class Words {
   async getPartWords(team: number, partCols: Array<string>) {
     const sql = `SELECT ${partCols.join(',')} FROM ${this.table} WHERE team = ${team}`;
     const words = await this.mysql.query(sql);
-    console.log(words);
     return words;
   }
   async resetToDefault() {

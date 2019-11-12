@@ -13,6 +13,7 @@ class Modals extends React.Component {
       <div className="modals">
         <TeamSettingModal className="modal--team-settings"></TeamSettingModal>
         <UploadModal className="modal--uploads"></UploadModal>
+        <OptionModal className="modal--options"></OptionModal>
         <SimilarWordsResetModal className="modal--similar-words-reset"></SimilarWordsResetModal>
         <AdminPasswordModal className="modal--admin-passwords"></AdminPasswordModal>
         <ResetModal className="modal--reset"></ResetModal>

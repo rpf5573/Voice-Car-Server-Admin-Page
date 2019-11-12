@@ -35,8 +35,11 @@ export default (app:Express, QH: QueryHub) => {
     const partCols = req.body.partCols as Array<string>;
     const team = req.body.team;
     try {
-      const result = await QH.words.getPartWords(team, partCols);
-      console.log(result);
+      let result = ((await QH.words.getPartWords(team, partCols) as any) as Array<any>)[0];
+      result = JSON.parse(JSON.stringify(result));
+      for ( const [key, val] of Object.entries(result)) {
+        if (val) { result[key] = JSON.parse(val as string); }
+      }
       return res.status(201).json({words: result});
     } catch (err) {
       console.error(err);

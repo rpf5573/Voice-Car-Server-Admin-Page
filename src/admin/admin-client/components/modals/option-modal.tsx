@@ -17,7 +17,7 @@ type Props = {
 type States = {
   backdrop: boolean,
 }
-class SimilarWordsResetModal extends React.Component<Props, States> {
+class OptionModal extends React.Component<Props, States> {
   constructor(props) {
     super(props);
     console.log(props);
@@ -80,4 +80,4 @@ function mapStateToProps(state: Admin.InitialState, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { closeModal, updateRCUsageState })(SimilarWordsResetModal);
+export default connect(mapStateToProps, { closeModal, updateRCUsageState })(OptionModal);

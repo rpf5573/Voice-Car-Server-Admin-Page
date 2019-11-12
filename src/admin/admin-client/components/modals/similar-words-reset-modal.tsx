@@ -15,7 +15,7 @@ type States = {
   backdrop: boolean,
   isResetReady: boolean
 }
-class ResetModal extends React.Component<Props, States> {
+class SimilarWordsResetModal extends React.Component<Props, States> {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,4 +81,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, { closeModal })(ResetModal);
+export default connect(mapStateToProps, { closeModal })(SimilarWordsResetModal);
