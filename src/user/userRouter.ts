@@ -60,6 +60,7 @@ export default (app:Express, QH: QueryHub) => {
       let words = ((await QH.words.getPartWords(team, [col]) as any) as Array<any>)[0];
       if ( words[col] ) {
         words = JSON.parse(JSON.stringify(words));
+        console.log(words);
         colWords = JSON.parse(words[col] as string) as Array<string>;
         colWords.forEach((el: string) => {
           if ( el == similarWord ) {
@@ -71,7 +72,7 @@ export default (app:Express, QH: QueryHub) => {
       }
       colWords.push(similarWord);
       await QH.words.updatePartWords(team, col, JSON.stringify(colWords));
-      return res.sendStatus(201);
+      return res.status(201).json({updatedPartWords: colWords});
     } catch (err) {
       console.error(err);
       return res.status(201).json({error: constants.ERROR});
