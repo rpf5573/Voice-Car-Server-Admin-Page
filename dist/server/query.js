@@ -104,7 +104,6 @@ class TeamPasswords {
                 sql = `SELECT * FROM ${this.table} WHERE team <= ${until} ORDER BY team`;
             }
             const rows = yield this.mysql.query(sql);
-            console.log(`getAll ${rows}`);
             return rows;
         });
     }
@@ -163,7 +162,6 @@ class Words {
         return __awaiter(this, void 0, void 0, function* () {
             const sql = `SELECT * FROM ${this.table} WHERE team = ${team}`;
             const rows = yield this.mysql.query(sql);
-            console.log(rows);
             return rows;
         });
     }
@@ -200,6 +198,13 @@ class Words {
             const sql = `UPDATE ${this.table} SET hand_open = NULL, hand_close = NULL, elbow_open = NULL, elbow_close = NULL, shoulder_open = NULL, shoulder_close = NULL, waist_left = NULL, waist_right = NULL, bottom_go = NULL, bottom_go_fast = NULL, bottom_left = NULL, bottom_right = NULL, bottom_back = NULL WHERE 1=1;`;
             const results = yield this.mysql.query(sql);
             return results;
+        });
+    }
+    updatePartWords(team, partCol, word) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = `UPDATE ${this.table} SET ${partCol} = '${word}' WHERE team = ${team}`;
+            const result = yield this.mysql.query(sql);
+            return result;
         });
     }
 }

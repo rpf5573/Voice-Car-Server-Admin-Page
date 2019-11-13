@@ -49,7 +49,32 @@ export default (app:Express, QH: QueryHub) => {
   // PartCol = hand_close, hand_open ...
   // Part = hand, arm ...
   app.post('/words/insertPartColWords', async (req, res) => {
-    const col = req.body.col;
     const team = req.body.team;
+    const col = req.body.col;
+    const similarWord = req.body.similarWord;
+  
+    try {
+      // 중복 체크후 입력
+      let hasSimilarWord = false;
+      let colWords: Array<string> = [];
+      let words = ((await QH.words.getPartWords(team, [col]) as any) as Array<any>)[0];
+      if ( words[col] ) {
+        words = JSON.parse(JSON.stringify(words));
+        colWords = JSON.parse(words[col] as string) as Array<string>;
+        colWords.forEach((el: string) => {
+          if ( el == similarWord ) {
+            hasSimilarWord = true;
+          }
+        });
+        // 이미 해당 단어가 있다면
+        if ( hasSimilarWord ) { return res.status(201).json({error: "이미 해당 단어가 있습니다"}); }
+      }
+      colWords.push(similarWord);
+      await QH.words.updatePartWords(team, col, JSON.stringify(colWords));
+      return res.sendStatus(201);
+    } catch (err) {
+      console.error(err);
+      return res.status(201).json({error: constants.ERROR});
+    }
   });
 }

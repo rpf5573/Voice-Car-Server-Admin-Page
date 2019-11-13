@@ -94,7 +94,6 @@ class TeamPasswords {
       sql = `SELECT * FROM ${this.table} WHERE team <= ${until} ORDER BY team`;
     }
     const rows = (await this.mysql.query(sql) as any) as Array<Admin.TeamPassword>;
-    console.log(`getAll ${rows}`);
     return rows;
   }
   async update(teamPasswords: Admin.TeamPassword[]) {
@@ -144,7 +143,6 @@ class Words {
   async getAllWords(team: number) {
     const sql = `SELECT * FROM ${this.table} WHERE team = ${team}`;
     const rows = await this.mysql.query(sql);
-    console.log(rows);
     return rows;
   }
   async getPartWords(team: number, partCols: Array<string>) {
@@ -176,6 +174,12 @@ class Words {
     const results = await this.mysql.query(sql);
     return results;
   }
+  async updatePartWords(team: number, partCol: string, word: string) {
+    const sql = `UPDATE ${this.table} SET ${partCol} = '${word}' WHERE team = ${team}`;
+    const result = await this.mysql.query(sql);
+    return result;
+  }
+
 }
 
 export default QueryHub;
