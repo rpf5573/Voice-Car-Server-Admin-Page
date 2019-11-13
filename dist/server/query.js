@@ -16,6 +16,7 @@ class QueryHub {
         this.metas = new Metas(constants_1.default.DB_TABLES.metas, pool);
         this.teamPasswords = new TeamPasswords(constants_1.default.DB_TABLES.teamPasswords, pool);
         this.words = new Words(constants_1.default.DB_TABLES.words, pool);
+        this.speeds = new Speeds(constants_1.default.DB_TABLES.speeds, pool);
     }
     getInitialState() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -150,10 +151,10 @@ class Words {
             waist_left: ['왼쪽', '외쪽'],
             waist_right: ['오른쪽', '어른쪽', '어느쪽'],
             bottom_go: ['앞으로', '아프로', '아브로', '어그로', '바보'],
-            bottom_go_fast: ['뒤로', '기록', '귀로', '1호', '위로'],
+            bottom_back: ['뒤로', '기록', '귀로', '1호', '위로'],
             bottom_left: ['왼쪽'],
             bottom_right: ['오른쪽', '어른쪽', '어느쪽'],
-            bottom_back: ['빠르게', '빠르개', '바르게', '바르개', '파르게', '파르개'],
+            bottom_go_fast: ['빠르게', '빠르개', '바르게', '바르개', '파르게', '파르개'],
         };
         this.table = table;
         this.mysql = mysql;
@@ -184,11 +185,10 @@ class Words {
     waist_left = '${JSON.stringify(this.defaultWords.waist_left)}', 
     waist_right = '${JSON.stringify(this.defaultWords.waist_right)}', 
     bottom_go = '${JSON.stringify(this.defaultWords.bottom_go)}', 
-    bottom_go_fast = '${JSON.stringify(this.defaultWords.bottom_go_fast)}', 
+    bottom_back = '${JSON.stringify(this.defaultWords.bottom_back)}',
     bottom_left = '${JSON.stringify(this.defaultWords.bottom_left)}', 
-    bottom_right = '${JSON.stringify(this.defaultWords.bottom_right)}', 
-    bottom_back = '${JSON.stringify(this.defaultWords.bottom_back)}' WHERE 1=1;`;
-            console.log('sql : ', sql);
+    bottom_right = '${JSON.stringify(this.defaultWords.bottom_right)}',
+    bottom_go_fast = '${JSON.stringify(this.defaultWords.bottom_go_fast)}' WHERE 1=1;`;
             const results = yield this.mysql.query(sql);
             return results;
         });
@@ -203,6 +203,77 @@ class Words {
     updatePartWords(team, partCol, word) {
         return __awaiter(this, void 0, void 0, function* () {
             const sql = `UPDATE ${this.table} SET ${partCol} = '${word}' WHERE team = ${team}`;
+            const result = yield this.mysql.query(sql);
+            return result;
+        });
+    }
+}
+class Speeds {
+    constructor(table, mysql) {
+        this.table = table;
+        this.mysql = mysql;
+        this.defaultSpeeds = {
+            hand_open: 70,
+            hand_close: 70,
+            elbow_open: 60,
+            elbow_close: 60,
+            shoulder_open: 80,
+            shoulder_close: 60,
+            waist_left: 30,
+            waist_right: 30,
+            bottom_go: 60,
+            bottom_back: 60,
+            bottom_left: 40,
+            bottom_right: 40,
+            bottom_go_fast: 99,
+        };
+        this.table = table;
+        this.mysql = mysql;
+    }
+    getAllSpeeds(team) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = `SELECT * FROM ${this.table} WHERE team = ${team}`;
+            const rows = yield this.mysql.query(sql);
+            return rows;
+        });
+    }
+    getPartSpeeds(team, partCols) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = `SELECT ${partCols.join(',')} FROM ${this.table} WHERE team = ${team}`;
+            const words = yield this.mysql.query(sql);
+            return words;
+        });
+    }
+    resetToDefault() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = `UPDATE ${this.table} SET
+      hand_open = '${JSON.stringify(this.defaultSpeeds.hand_open)}',
+      hand_close = '${JSON.stringify(this.defaultSpeeds.hand_close)}', 
+      elbow_open = '${JSON.stringify(this.defaultSpeeds.elbow_open)}', 
+      elbow_close = '${JSON.stringify(this.defaultSpeeds.elbow_close)}', 
+      shoulder_open = '${JSON.stringify(this.defaultSpeeds.shoulder_open)}', 
+      shoulder_close = '${JSON.stringify(this.defaultSpeeds.shoulder_close)}', 
+      waist_left = '${JSON.stringify(this.defaultSpeeds.waist_left)}', 
+      waist_right = '${JSON.stringify(this.defaultSpeeds.waist_right)}', 
+      bottom_go = '${JSON.stringify(this.defaultSpeeds.bottom_go)}', 
+      bottom_go_fast = '${JSON.stringify(this.defaultSpeeds.bottom_go_fast)}', 
+      bottom_left = '${JSON.stringify(this.defaultSpeeds.bottom_left)}', 
+      bottom_right = '${JSON.stringify(this.defaultSpeeds.bottom_right)}', 
+      bottom_back = '${JSON.stringify(this.defaultSpeeds.bottom_back)}' WHERE 1=1;`;
+            const results = yield this.mysql.query(sql);
+            return results;
+        });
+    }
+    resetToZero() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = `UPDATE ${this.table} SET hand_open = 0, hand_close = 0, elbow_open = 0, elbow_close = 0, shoulder_open = 0, shoulder_close = 0, waist_left = 0, waist_right = 0, bottom_go = 0, bottom_go_fast = 0, bottom_left = 0, bottom_right = 0, bottom_back = 0 WHERE 1=1;`;
+            const results = yield this.mysql.query(sql);
+            return results;
+        });
+    }
+    updatePartSpeeds(team, partCol, speed) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const sql = `UPDATE ${this.table} SET ${partCol} = ${speed} WHERE team = ${team}`;
             const result = yield this.mysql.query(sql);
             return result;
         });

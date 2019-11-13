@@ -78,4 +78,32 @@ export default (app:Express, QH: QueryHub) => {
       return res.status(201).json({error: constants.ERROR});
     }
   });
+
+  app.post('/speeds/getPartSpeeds', async (req, res) => {
+    const partCols = req.body.partCols as Array<string>;
+    const team = req.body.team;
+    try {
+      let result = ((await QH.speeds.getPartSpeeds(team, partCols) as any) as Array<any>)[0];
+      result = JSON.parse(JSON.stringify(result));
+      console.log("part speed result", result);
+      return res.status(201).json({speeds: result});
+    } catch (err) {
+      console.error(err);
+      return res.status(201).json({error: constants.ERROR});
+    }
+  });
+  // PartCol = hand_close, hand_open ...
+  // Part = hand, arm ...
+  app.post('/speeds/insertPartColSpeed', async (req, res) => {
+    const team = req.body.team;
+    const col = req.body.col;
+    const speed = req.body.speed;
+    try {
+      await QH.speeds.updatePartSpeeds(team, col, speed);
+      return res.sendStatus(201);
+    } catch (err) {
+      console.error(err);
+      return res.status(201).json({error: constants.ERROR});
+    }
+  });
 }

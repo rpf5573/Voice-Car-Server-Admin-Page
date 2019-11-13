@@ -78,4 +78,19 @@ declare namespace Admin {
     bottom_right: Array<string>,
     bottom_back: Array<string>
   }
+  type defaultSpeeds = {
+    hand_open: number,
+    hand_close: number,
+    elbow_open: number,
+    elbow_close: number,
+    shoulder_open: number,
+    shoulder_close: number,
+    waist_left: number,
+    waist_right: number,
+    bottom_go: number,
+    bottom_go_fast: number,
+    bottom_left: number,
+    bottom_right: number,
+    bottom_back: number,
+  }
 }

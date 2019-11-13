@@ -111,7 +111,6 @@ exports.default = (app, uploadHandler, QH) => {
     app.post('/admin/words-reset/default', (req, res) => __awaiter(this, void 0, void 0, function* () {
         try {
             const result = yield QH.words.resetToDefault();
-            console.log(result);
             return res.sendStatus(201);
         }
         catch (error) {
@@ -124,7 +123,30 @@ exports.default = (app, uploadHandler, QH) => {
     app.post('/admin/words-reset/null', (req, res) => __awaiter(this, void 0, void 0, function* () {
         try {
             const result = yield QH.words.resetToNull();
-            console.log(result);
+            return res.sendStatus(201);
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(201).json({
+                error: constants_1.default.ERROR.unknown
+            });
+        }
+    }));
+    app.post('/admin/speeds-reset/default', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield QH.speeds.resetToDefault();
+            return res.sendStatus(201);
+        }
+        catch (error) {
+            console.error(error);
+            return res.status(201).json({
+                error: constants_1.default.ERROR.unknown
+            });
+        }
+    }));
+    app.post('/admin/speeds-reset/zero', (req, res) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield QH.speeds.resetToZero();
             return res.sendStatus(201);
         }
         catch (error) {

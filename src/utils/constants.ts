@@ -26,6 +26,7 @@ const DB_TABLES = {
   postInfos: `${PREFIX}_postInfos`,
   uploads: `${PREFIX}_uploads`,
   words: `${PREFIX}_words`,
+  speeds: `${PREFIX}_speeds`
 }
 const IMAGE = 'image';
 const VIDEO = 'video';

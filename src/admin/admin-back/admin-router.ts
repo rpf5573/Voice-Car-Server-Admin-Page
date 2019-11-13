@@ -111,7 +111,6 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
   app.post('/admin/words-reset/default', async(req, res) => {
     try {
       const result = await QH.words.resetToDefault();
-      console.log(result);
       return res.sendStatus(201);
     } catch(error) {
       console.error(error);
@@ -123,7 +122,30 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
   app.post('/admin/words-reset/null', async(req, res) => {
     try {
       const result = await QH.words.resetToNull();
-      console.log(result);
+      return res.sendStatus(201);
+    } catch(error) {
+      console.error(error);
+      return res.status(201).json({
+        error: constants.ERROR.unknown
+      });
+    }
+  });
+
+  // speeds
+  app.post('/admin/speeds-reset/default', async(req, res) => {
+    try {
+      const result = await QH.speeds.resetToDefault();
+      return res.sendStatus(201);
+    } catch(error) {
+      console.error(error);
+      return res.status(201).json({
+        error: constants.ERROR.unknown
+      });
+    }
+  });
+  app.post('/admin/speeds-reset/zero', async(req, res) => {
+    try {
+      const result = await QH.speeds.resetToZero();
       return res.sendStatus(201);
     } catch(error) {
       console.error(error);
