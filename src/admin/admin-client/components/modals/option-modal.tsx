@@ -62,7 +62,7 @@ class OptionModal extends React.Component<Props, States> {
               </div>
               <div className="radio abc-radio abc-radio-danger">
                 <input type="radio" id="rcUsageStateRadioInput02" onChange={this.updateRCUsageState} checked={ this.props.rcUsageState ? false : true } value={constants.OFF}/>
-                <label htmlFor="rcUsageStateRadioInput02">음성인식 사용하기</label>
+                <label htmlFor="rcUsageStateRadioInput02">보이스 사용하기</label>
               </div>
             </Col>
           </Row>

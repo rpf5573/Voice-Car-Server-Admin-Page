@@ -58,12 +58,12 @@ class SimilarWordsResetModal extends React.Component<Props, States> {
         <ModalBody>
           <Row className="mb-10">
             <Col>
-              <Button color="success" onClick={this.handleResetToDefault}>기본값으로 설정</Button>
+              <Button color="success" onClick={this.handleResetToDefault}>관리자 기본값 초기화</Button>
             </Col>
           </Row>
           <Row>
             <Col>
-              <Button color="danger" onClick={this.handleResetToNull}>유사명령어전체삭제</Button>
+              <Button color="danger" onClick={this.handleResetToNull}>교육생 초기화</Button>
             </Col>
           </Row>
         </ModalBody>

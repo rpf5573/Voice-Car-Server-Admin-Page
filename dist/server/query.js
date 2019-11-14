@@ -34,9 +34,10 @@ class QueryHub {
     }
     reset() {
         return __awaiter(this, void 0, void 0, function* () {
-            this.metas.reset();
-            this.teamPasswords.reset();
-            this.words.resetToDefault();
+            yield this.metas.reset();
+            yield this.teamPasswords.reset();
+            yield this.words.resetToDefault();
+            yield this.speeds.resetToDefault();
         });
     }
 }
@@ -59,7 +60,6 @@ class Metas {
                 }, "");
                 const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
                 const rows = yield this.pool.query(sql);
-                console.log(`LOG: Metas -> get -> rows`, rows);
                 let results = {};
                 rows.forEach((obj) => {
                     Object.assign(results, { [obj.metaKey]: obj.metaValue });
@@ -125,7 +125,6 @@ class TeamPasswords {
         return __awaiter(this, void 0, void 0, function* () {
             const sql = `SELECT COUNT(password) as team_count FROM ${this.table} WHERE password IS NOT NULL and password != 0`;
             const rows = yield this.mysql.query(sql);
-            console.log(`getTeamCount : ${rows}`);
             return 0;
         });
     }
@@ -225,7 +224,7 @@ class Speeds {
             bottom_back: 60,
             bottom_left: 40,
             bottom_right: 40,
-            bottom_go_fast: 99,
+            bottom_go_fast: 100,
         };
         this.table = table;
         this.mysql = mysql;

@@ -27,9 +27,10 @@ class QueryHub {
     };
   }
   async reset() {
-    this.metas.reset();
-    this.teamPasswords.reset();
-    this.words.resetToDefault();
+    await this.metas.reset();
+    await this.teamPasswords.reset();
+    await this.words.resetToDefault();
+    await this.speeds.resetToDefault();
   }
 }
 
@@ -53,7 +54,6 @@ class Metas {
       );
       const sql = `SELECT metaKey,metaValue FROM ${this.table} WHERE metaKey IN (${keys})`;
       const rows = (await this.pool.query(sql) as any) as Array<{metaKey: string, metaValue: string}>;
-      console.log(`LOG: Metas -> get -> rows`, rows);
       let results = {};
       rows.forEach((obj) => {
         Object.assign(results, {[obj.metaKey]: obj.metaValue});
@@ -112,7 +112,6 @@ class TeamPasswords {
   async getTeamCount(): Promise<number> {
     const sql = `SELECT COUNT(password) as team_count FROM ${this.table} WHERE password IS NOT NULL and password != 0`;
     const rows = await this.mysql.query(sql);
-    console.log(`getTeamCount : ${rows}`);
     return 0;
   }
   async reset() {
@@ -197,7 +196,7 @@ class Speeds {
     bottom_back: 60,
     bottom_left: 40,
     bottom_right: 40,
-    bottom_go_fast: 99, // 99가 max입니다. 100은 안되요!
+    bottom_go_fast: 100, // 99가 max입니다. 100은 안되요!
   };
   constructor(private table: string, private mysql: Pool) {
     this.table = table;
