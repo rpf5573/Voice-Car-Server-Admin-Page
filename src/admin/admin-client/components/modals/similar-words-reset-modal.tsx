@@ -56,7 +56,7 @@ class SimilarWordsResetModal extends React.Component<Props, States> {
           <span>초기화</span>
         </ModalHeader>
         <ModalBody>
-          <Row className="mb-10">
+          <Row className="mb-10 d-none">
             <Col>
               <Button color="success" onClick={this.handleResetToDefault}>관리자 기본값 초기화</Button>
             </Col>
