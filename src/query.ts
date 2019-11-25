@@ -188,19 +188,19 @@ class Words {
 
 class Speeds {
   private defaultSpeeds: Admin.defaultSpeeds = {
-    hand_open: 100,
-    hand_close: 100,
+    hand_open: 80,
+    hand_close: 80,
     elbow_open: 90,
     elbow_close: 90,
     shoulder_open: 100,
-    shoulder_close: 90,
-    waist_left: 50,
-    waist_right: 50,
-    bottom_go: 90,
-    bottom_back: 90,
-    bottom_left: 70,
-    bottom_right: 70,
-    bottom_go_fast: 100, // 99가 max입니다. 100은 안되요!
+    shoulder_close: 60,
+    waist_left: 40,
+    waist_right: 40,
+    bottom_go: 60,
+    bottom_back: 60,
+    bottom_left: 40,
+    bottom_right: 40,
+    bottom_go_fast: 100,
   };
   constructor(private table: string, private mysql: Pool) {
     this.table = table;
