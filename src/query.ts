@@ -191,7 +191,7 @@ class Speeds {
     hand_open: 80,
     hand_close: 80,
     elbow_open: 90,
-    elbow_close: 90,
+    elbow_close: 60,
     shoulder_open: 100,
     shoulder_close: 60,
     waist_left: 40,
