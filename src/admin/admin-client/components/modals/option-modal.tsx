@@ -56,13 +56,13 @@ class OptionModal extends React.Component<Props, States> {
         <ModalBody>
           <Row>
             <Col>
-              <div className="radio abc-radio abc-radio-primary">
-                <input type="radio" id="rcUsageStateRadioInput01" onChange={this.updateRCUsageState} checked={ this.props.rcUsageState ? true : false } value={constants.ON}/>
-                <label htmlFor="rcUsageStateRadioInput01">리모콘 사용하기</label>
-              </div>
               <div className="radio abc-radio abc-radio-danger">
                 <input type="radio" id="rcUsageStateRadioInput02" onChange={this.updateRCUsageState} checked={ this.props.rcUsageState ? false : true } value={constants.OFF}/>
                 <label htmlFor="rcUsageStateRadioInput02">보이스 사용하기</label>
+              </div>
+              <div className="radio abc-radio abc-radio-primary">
+                <input type="radio" id="rcUsageStateRadioInput01" onChange={this.updateRCUsageState} checked={ this.props.rcUsageState ? true : false } value={constants.ON}/>
+                <label htmlFor="rcUsageStateRadioInput01">리모콘 사용하기</label>
               </div>
             </Col>
           </Row>

@@ -81,6 +81,10 @@ class Metas {
     sql = `UPDATE ${this.table} SET metaValue='${JSON.stringify(adminPasswords)}' WHERE metaKey='adminPasswords'`;
     result = await this.pool.query(sql);
 
+    // remotecontroller & voice setting
+    sql = `UPDATE ${this.table} SET metaValue='0' WHERE metaKey='rcUsageState'`;
+    result = await this.pool.query(sql);
+
     return result;
   }
 }

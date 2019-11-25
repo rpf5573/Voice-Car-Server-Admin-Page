@@ -99,6 +99,7 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
     try {
       console.log(req.body.rcUsageState);
       await QH.metas.update('rcUsageState', req.body.rcUsageState);
+      await QH.speeds.resetToDefault();
       return res.sendStatus(201);
     } catch(error) {
       return res.status(201).json({
