@@ -100,6 +100,7 @@ exports.default = (app, uploadHandler, QH) => {
         try {
             console.log(req.body.rcUsageState);
             yield QH.metas.update('rcUsageState', req.body.rcUsageState);
+            yield QH.speeds.resetToDefault();
             return res.sendStatus(201);
         }
         catch (error) {

@@ -79,39 +79,7 @@ class TeamSettingModal extends React.Component<Props, States> {
       }
     }
 
-    // 2. 띄엄 띄엄 비밀번호 설정하는거 금지
-    for( var i = 0; i < inputs.length; i++ ) {
-      let next = i + 1;
-      if ( next < inputs.length ) {
-        var preVal: any = {
-          value: parseInt(inputs[i].value),
-          placeholder: parseInt(inputs[i].placeholder)
-        }
-        if ( isNaN(preVal.value) ) {
-          preVal = preVal.placeholder;
-        } else {
-          preVal = preVal.value;
-        }
-        
-        var nextVal: any = {
-          value: parseInt(inputs[next].value),
-          placeholder: parseInt(inputs[next].placeholder)
-        }
-
-        if ( isNaN(nextVal.value) ) {
-          nextVal = nextVal.placeholder;
-        } else {
-          nextVal = nextVal.value;
-        }
-
-        if ( preVal == 0 && nextVal != 0 ) {
-          return 402;
-        }
-
-      }
-    }
-
-    // 3. 아무것도 입력하지 않으면 안됨
+    // 2. 아무것도 입력하지 않으면 안됨
     var emptyBoxCount = 0;
     for( var i = 0; i < inputs.length; i++ ) {
       let val = parseInt(inputs[i].value);
@@ -120,7 +88,7 @@ class TeamSettingModal extends React.Component<Props, States> {
       }
     }
     if ( emptyBoxCount == inputs.length ) {
-      return 403;
+      return 402;
     }
 
     return 201;
@@ -137,9 +105,6 @@ class TeamSettingModal extends React.Component<Props, States> {
           alert('ERROR : 중복된 비밀번호가 있습니다. 다시 확인해 주시기 바랍니다');
           return;
         case 402:
-          alert( "ERROR : 비밀번호는 연속적으로 설정해 주시기 바랍니다" );
-          return;
-        case 403:
           alert( "ERROR : 비밀번호를 입력해 주시기 바랍니다" );
           return;
       }

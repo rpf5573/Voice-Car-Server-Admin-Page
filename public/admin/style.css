@@ -9010,6 +9010,12 @@ input.form-control::placeholder {
   color: black;
   text-shadow: white  .02em   0     0, white  0       .02em 0, white -.02em   0     0, white  0      -.02em 0; }
 
+.mb-10 {
+  margin-bottom: 10px; }
+
+.d-none {
+  display: none !important; }
+
 /*  Components
 /* --------------------------------------------------- */
 .modal-dialog.modal--team-settings .modal-title {
@@ -9031,7 +9037,7 @@ input.form-control::placeholder {
 .modal-dialog.modal--team-settings .tab-content .input-group {
   margin-top: 20px; }
   .modal-dialog.modal--team-settings .tab-content .input-group .input-group-prepend {
-    width: 20%;
+    width: 45%;
     padding: 0;
     text-align: center; }
     .modal-dialog.modal--team-settings .tab-content .input-group .input-group-prepend .input-group-text {
@@ -9546,6 +9552,11 @@ input.form-control::placeholder {
     vertical-align: middle; }
   .modal-dialog.modal--result table td {
     padding: 0.5rem; }
+
+.modal--reset .notice-before-reset {
+  color: red;
+  font-weight: 700;
+  font-size: 20px; }
 
 .modal-dialog.modal--post-infos .post-info-row input, .modal-dialog.modal--post-infos .post-info-row .cancel-btn, .modal-dialog.modal--post-infos .post-info-row .apply-btn {
   display: none; }

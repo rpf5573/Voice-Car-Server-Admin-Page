@@ -87,6 +87,8 @@ class Metas {
             };
             sql = `UPDATE ${this.table} SET metaValue='${JSON.stringify(adminPasswords)}' WHERE metaKey='adminPasswords'`;
             result = yield this.pool.query(sql);
+            sql = `UPDATE ${this.table} SET metaValue='0' WHERE metaKey='rcUsageState'`;
+            result = yield this.pool.query(sql);
             return result;
         });
     }
@@ -212,14 +214,14 @@ class Speeds {
         this.table = table;
         this.mysql = mysql;
         this.defaultSpeeds = {
-            hand_open: 70,
-            hand_close: 70,
-            elbow_open: 60,
+            hand_open: 80,
+            hand_close: 80,
+            elbow_open: 90,
             elbow_close: 60,
-            shoulder_open: 80,
+            shoulder_open: 100,
             shoulder_close: 60,
-            waist_left: 30,
-            waist_right: 30,
+            waist_left: 40,
+            waist_right: 40,
             bottom_go: 60,
             bottom_back: 60,
             bottom_left: 40,
