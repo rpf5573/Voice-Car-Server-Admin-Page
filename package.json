@@ -36,7 +36,7 @@
     "start-dev": "tsc && NODE_ENV=development NODE_PORT=8080 group=a node --inspect=5858 -r ts-node/register ./src/index.ts",
     "build-admin": "cd ./src/admin/admin-client && yarn install && yarn build-pro",
     "start-pro:a": "NODE_ENV=production NODE_PORT=8081 group=a tsc tsconfig.json ./src/index.ts -w & pm2 start dist/server/index.js --name a",
-    "start-pro:b": "NODE_ENV=production NODE_PORT=8082 group=b pm2 start ts-node -- -P tsconfig.json ./src/index.ts --name b",
+    "start-pro:a": "NODE_ENV=production NODE_PORT=8082 group=b tsc tsconfig.json ./src/index.ts -w & pm2 start dist/server/index.js --name b",
     "start-all": "yarn start-pro:a && yarn start-pro:b",
     "start-dev:watch": "nodemon",
     "build": "tsc",
