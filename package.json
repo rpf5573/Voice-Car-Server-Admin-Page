@@ -33,11 +33,13 @@
     "typescript": "^3.5.1"
   },
   "scripts": {
-    "start-dev": "tsc && NODE_ENV=development NODE_PORT=8080 node --inspect=5858 -r ts-node/register ./src/index.ts",
-    "start-pro": "NODE_ENV=production NODE_PORT=8081 pm2 start ts-node -- -P tsconfig.json ./src/index.ts --name voice-car",
+    "start-dev": "tsc && NODE_ENV=development NODE_PORT=8080 group=a node --inspect=5858 -r ts-node/register ./src/index.ts",
     "build-admin": "cd ./src/admin/admin-client && yarn install && yarn build-pro",
+    "start-pro:a": "NODE_ENV=production NODE_PORT=8081 group=a pm2 start ts-node -- -P tsconfig.json ./src/index.ts --name voice-car-a",
+    "start-pro:b": "NODE_ENV=production NODE_PORT=8082 group=b pm2 start ts-node -- -P tsconfig.json ./src/index.ts --name voice-car-b",
+    "start-all": "yarn start-pro:a && yarn start-pro:b",
     "start-dev:watch": "nodemon",
     "build": "tsc",
-    "restart": "pm2 delete all && yarn start-pro"
+    "restart": "pm2 delete all && yarn start-all"
   }
 }
