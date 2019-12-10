@@ -29,7 +29,7 @@ userBackend(app, queryHub);
 
 app.use(express.static('public'));
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.NODE_PORT || 8080;
 
 console.log(PORT);
 
