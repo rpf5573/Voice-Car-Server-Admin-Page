@@ -48,16 +48,22 @@ class TeamSettingModal extends React.Component<Props, States> {
     }
   }
 
+  // 앞에 a,b를 빼고 password를 갖고온다
   getPasswordFromInput(input) {
     var password = 0;
     var passwordBox = {
       value: input.value,
       placeholder: input.placeholder
     }
-    if ( ! isNaN(passwordBox.value) ) {
+
+    if ( passwordBox.value ) {
       return passwordBox.value;
     }
-    if ( ! isNaN(passwordBox.placeholder) ) {
+
+    if ( passwordBox.placeholder ) {
+      if ( passwordBox.placeholder.length > 1 ) {
+        passwordBox.placeholder = passwordBox.placeholder.substr(1);
+      }
       return passwordBox.placeholder;
     }
 
@@ -67,8 +73,9 @@ class TeamSettingModal extends React.Component<Props, States> {
   validate(inputs) {
     // 1.중복 검사 - placeholder도 검사해 줘야합니다
     for( var i = 0; i < inputs.length; i++ ) {
-      let l = this.getPasswordFromInput(inputs[i]);
-      if ( l.length > 0 ) {
+      let l = parseInt(this.getPasswordFromInput(inputs[i]));
+      console.log("l", l);
+      if ( l > 0 ) {
         for( var z = i+1; z < inputs.length; z++ ) {
           let r = this.getPasswordFromInput(inputs[z]);
           // placeholder끼리 비교하는 경우도 있지만,,, 뭐 어때 ! 그 둘은 절대 같을 일이 없을 텐데 ㅎㅎ
