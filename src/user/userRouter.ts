@@ -7,10 +7,11 @@ export default (app:Express, QH: QueryHub) => {
     let team = null;
     try {
       let teamPasswords = await QH.teamPasswords.getAll();
+      let rcUsageState = await QH.metas.get('rcUsageState');
       for(let i = 0; i < teamPasswords.length; i++) {
         if (pw == teamPasswords[i].password) {
           team = teamPasswords[i].team;
-          return res.status(201).json({team});
+          return res.status(201).json({team, rcUsageState});
         }
       }
     } catch(err) {
