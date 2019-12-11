@@ -24,7 +24,7 @@ exports.default = (app, uploadHandler, QH) => {
             srcPath.js = 'admin/bundle.js';
         }
         let initialSettings = yield QH.getInitialState();
-        let document = template_1.default(initialSettings, srcPath);
+        let document = template_1.default(initialSettings, srcPath, '', process.env.__group__);
         return res.set('Content-Type', 'text/html').end(document);
     }));
     app.post('/admin/uploads', (req, res) => __awaiter(this, void 0, void 0, function* () {

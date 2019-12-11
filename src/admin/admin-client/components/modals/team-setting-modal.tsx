@@ -15,7 +15,7 @@ type Props = {
   className: string,
   updateTeamPasswords: (teamPasswords: Admin.TeamPassword[]) => void,
   updateTeamCount: (teamCount: number) => void,
-  teamPasswords: Admin.TeamPassword[]
+  teamPasswords: Admin.TeamPassword[],
 }
 type States = {
   activeTab: string,
@@ -31,7 +31,7 @@ class TeamSettingModal extends React.Component<Props, States> {
     this.close = this.close.bind(this);
     this.toggle = this.toggle.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.getNumberFromInput = this.getNumberFromInput.bind(this);
+    this.getPasswordFromInput = this.getPasswordFromInput.bind(this);
     this.validate = this.validate.bind(this);
   }
   passwordInputFields = [];
@@ -48,29 +48,29 @@ class TeamSettingModal extends React.Component<Props, States> {
     }
   }
 
-  getNumberFromInput(input) {
-    var number = 0;
-    var numberBox = {
-      value: parseInt(input.value),
-      placeholder: parseInt(input.placeholder)
+  getPasswordFromInput(input) {
+    var password = 0;
+    var passwordBox = {
+      value: input.value,
+      placeholder: input.placeholder
     }
-    if ( ! isNaN(numberBox.value) ) {
-      return numberBox.value;
+    if ( ! isNaN(passwordBox.value) ) {
+      return passwordBox.value;
     }
-    if ( ! isNaN(numberBox.placeholder) ) {
-      return numberBox.placeholder;
+    if ( ! isNaN(passwordBox.placeholder) ) {
+      return passwordBox.placeholder;
     }
 
-    return number;
+    return password;
   }
 
   validate(inputs) {
     // 1.중복 검사 - placeholder도 검사해 줘야합니다
     for( var i = 0; i < inputs.length; i++ ) {
-      let l = this.getNumberFromInput(inputs[i]);
-      if ( l > 0 ) {
+      let l = this.getPasswordFromInput(inputs[i]);
+      if ( l.length > 0 ) {
         for( var z = i+1; z < inputs.length; z++ ) {
-          let r = this.getNumberFromInput(inputs[z]);
+          let r = this.getPasswordFromInput(inputs[z]);
           // placeholder끼리 비교하는 경우도 있지만,,, 뭐 어때 ! 그 둘은 절대 같을 일이 없을 텐데 ㅎㅎ
           if ( l == r ) {
             return 401;
@@ -82,8 +82,8 @@ class TeamSettingModal extends React.Component<Props, States> {
     // 2. 아무것도 입력하지 않으면 안됨
     var emptyBoxCount = 0;
     for( var i = 0; i < inputs.length; i++ ) {
-      let val = parseInt(inputs[i].value);
-      if ( isNaN(val) ) {
+      let val = inputs[i].value;
+      if ( val.length == 0 ) {
         emptyBoxCount++;
       }
     }
@@ -112,11 +112,11 @@ class TeamSettingModal extends React.Component<Props, States> {
       // 이제 값 추출
       var teamPasswords = [];
       for( var i = 0; i < this.passwordInputFields.length; i++ ) {
-        let val = parseInt(this.passwordInputFields[i].value);
-        if ( !isNaN(val) ) { // 0이 들어와도 되기는 한다
+        let val = this.passwordInputFields[i].value;
+        if ( val ) { // 0이 들어와도 되기는 한다
           teamPasswords.push({
             team: (i+1),
-            password: val
+            password: `${window.__group__}${val}`
           });
         }
       }
@@ -178,7 +178,7 @@ class TeamSettingModal extends React.Component<Props, States> {
                   포크봇{i}
                 </InputGroupText>
               </InputGroupAddon>
-              <input type="number" min="0" className="form-control password-input" placeholder={passwords[i-1].password} />
+              <input type="text" min="0" className="form-control password-input" placeholder={passwords[i-1].password} />
             </InputGroup>
           </Col>
         );
@@ -227,7 +227,7 @@ class TeamSettingModal extends React.Component<Props, States> {
 function mapStateToProps(state, ownProps) {
   return {
     activeModalClassName : state.modalControl.activeModalClassName,
-    teamPasswords : state.teamSettings.teamPasswords
+    teamPasswords : state.teamSettings.teamPasswords,
   };
 }
 

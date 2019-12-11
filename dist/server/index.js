@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+if (!process.env.group) {
+    process.env.group = 'a';
+}
 const fs = require("fs");
 const path = require("path");
 const morgan = require("morgan");
@@ -19,7 +22,7 @@ app.use(morgan('combined', { stream: accessLogStream }));
 index_1.default(app, queryHub);
 userRouter_1.default(app, queryHub);
 app.use(express.static('public'));
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.NODE_PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is running in http://localhost:${PORT}`);
 });

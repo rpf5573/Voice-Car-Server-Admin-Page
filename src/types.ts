@@ -1,6 +1,9 @@
 // from : https://stackoverflow.com/questions/41285211/overriding-interface-property-type-defined-in-typescript-d-ts-file
 // 속성을 override할 수 있다
-interface Window { __PRELOADED_STATE__: Admin.InitialState }
+interface Window {
+  __PRELOADED_STATE__: Admin.InitialState,
+  __group__: string
+}
 declare namespace Admin {
   type TeamPassword = {
     team: number,
@@ -51,7 +54,7 @@ declare namespace Admin {
   }
   type TeamSettings = {
     teamPasswords: TeamPassword[],
-    teamCount: number
+    teamCount: number,
   }
   type ModalControl = {
     activeModalClassName: string | undefined,

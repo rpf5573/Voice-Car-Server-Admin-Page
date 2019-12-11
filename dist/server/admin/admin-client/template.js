@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = (initialState = {}, srcPath = { style: 'style.css', js: 'main.js' }, message = '') => {
+exports.default = (initialState = {}, srcPath = { style: 'style.css', js: 'main.js' }, message = '', group = 'a') => {
     let page = `<!DOCTYPE html>
               <html lang="en">
               <head>
@@ -17,6 +17,7 @@ exports.default = (initialState = {}, srcPath = { style: 'style.css', js: 'main.
 
                 <script>
                   window.__PRELOADED_STATE__ = ${JSON.stringify(initialState)};
+                  window.__group__ = "${group}";
                   var message = '${message}';
                   if ( message ) {
                     alert(message);

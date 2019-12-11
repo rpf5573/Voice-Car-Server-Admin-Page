@@ -7,7 +7,7 @@ let config = {
     host: 'localhost',
     user: 'root',
     password: 'root',
-    database: `voice_car`
+    database: `voice_car_${process.env.group}`
 };
 if (process.env.NODE_ENV == 'production') {
     config.user = 'rpf5573';

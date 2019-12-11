@@ -11,7 +11,7 @@ export default function(state: Admin.TeamSettings = null, action) {
       return Object.assign({}, state, {
         teamCount: action.payload
       });
-    default: 
+    default:
       return state;
   }
 }

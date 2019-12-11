@@ -6,7 +6,6 @@ import configureStore from './store';
 import { Provider } from 'react-redux';
 
 let initialSettings = window.__PRELOADED_STATE__;
-
 if ( initialSettings ) {
   let store = configureStore(initialSettings);
   ReactDOM.render(

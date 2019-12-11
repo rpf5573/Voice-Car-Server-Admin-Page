@@ -1,4 +1,4 @@
-export default (initialState = {}, srcPath = { style: 'style.css', js: 'main.js' }, message = '') => {
+export default (initialState = {}, srcPath = { style: 'style.css', js: 'main.js' }, message = '', group = 'a') => {
   let page = `<!DOCTYPE html>
               <html lang="en">
               <head>
@@ -15,6 +15,7 @@ export default (initialState = {}, srcPath = { style: 'style.css', js: 'main.js'
 
                 <script>
                   window.__PRELOADED_STATE__ = ${JSON.stringify(initialState)};
+                  window.__group__ = "${group}";
                   var message = '${message}';
                   if ( message ) {
                     alert(message);

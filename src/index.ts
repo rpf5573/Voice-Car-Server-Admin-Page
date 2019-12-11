@@ -1,3 +1,7 @@
+if ( ! process.env.group ) {
+  process.env.group = 'a';
+}
+
 // utils
 import * as fs from 'fs';
 import * as path from 'path';
@@ -30,8 +34,6 @@ userBackend(app, queryHub);
 app.use(express.static('public'));
 
 const PORT = process.env.NODE_PORT || 8080;
-
-console.log(PORT);
 
 app.listen(PORT, () => {
   console.log(`Server is running in http://localhost:${PORT}`)
