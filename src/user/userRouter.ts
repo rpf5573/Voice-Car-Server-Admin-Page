@@ -20,7 +20,7 @@ export default (app:Express, QH: QueryHub) => {
       console.log(err);
       return res.sendStatus(401);
     }
-    return res.status(201).json({error: "비밀번호를 다시 확인해주세요"});
+    return res.status(201).json({error: "비밀번호를 다시 확인해주세요 히히히히히"});
   });
   app.get('/user/initialState', async (req, res) => {
     try {
