@@ -3,10 +3,10 @@ import QueryHub from '../query';
 import constants from '../utils/constants';
 
 export default (app:Express, QH: QueryHub) => {
-  
+
   console.log("여기도 읽히긴 혔다잉");
 
-  app.get('/test', async (req, res) => {
+  app.post('/test', async (req, res) => {
     return res.status(201).json({error: "테스트 API 호출 in userRouter.ts"});
   });
 

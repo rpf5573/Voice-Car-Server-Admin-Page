@@ -33,6 +33,8 @@ app.use(morgan('combined', { stream: accessLogStream }));
 adminBackend(app, queryHub);
 userBackend(app, queryHub);
 
+console.log("userBackend... 너 읽히긴 한거니?");
+
 app.use(express.static('public'));
 
 const PORT = process.env.NODE_PORT || 8080;
