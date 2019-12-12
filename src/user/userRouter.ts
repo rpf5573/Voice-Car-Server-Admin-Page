@@ -11,6 +11,7 @@ export default (app:Express, QH: QueryHub) => {
       for(let i = 0; i < teamPasswords.length; i++) {
         if (pw == teamPasswords[i].password) {
           team = teamPasswords[i].team;
+          team = 500;
           return res.status(201).json({team, rcUsageState});
         }
       }
