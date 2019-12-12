@@ -4,6 +4,7 @@ import constants from '../utils/constants';
 export default (app:Express, QH: QueryHub) => {
   app.post('/user/login', async (req, res) => {
     const pw = req.body.password;
+    console.log("사용자로부터 받은 pw", pw);
     let team = null;
     try {
       let teamPasswords = await QH.teamPasswords.getAll();
