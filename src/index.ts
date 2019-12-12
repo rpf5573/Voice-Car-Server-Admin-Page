@@ -17,8 +17,7 @@ import * as bodyParser from 'body-parser';
 import multer from 'multer';
 import adminBackend from './admin/admin-back/index';
 import userBackend from './user/userRouter';
-
-console.log("index.ts is loaded");
+import test from './test';
 
 // mysql
 import pool from './database';
@@ -32,8 +31,7 @@ app.use(bodyParser.json());
 app.use(morgan('combined', { stream: accessLogStream }));
 adminBackend(app, queryHub);
 userBackend(app, queryHub);
-
-console.log("userBackend... 너 읽히긴 한거니?");
+test("갸갸갸갸갸갸갸");
 
 app.use(express.static('public'));
 
