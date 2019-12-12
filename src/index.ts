@@ -17,7 +17,6 @@ import * as bodyParser from 'body-parser';
 import multer from 'multer';
 import adminBackend from './admin/admin-back/index';
 import userBackend from './user/userRouter';
-import test from './test';
 
 // mysql
 import pool from './database';
