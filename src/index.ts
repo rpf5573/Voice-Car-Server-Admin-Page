@@ -18,6 +18,8 @@ import multer from 'multer';
 import adminBackend from './admin/admin-back/index';
 import userBackend from './user/userRouter';
 
+console.log("index.ts is loaded");
+
 // mysql
 import pool from './database';
 import QueryHub from './query';
