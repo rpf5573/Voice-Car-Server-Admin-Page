@@ -63,28 +63,6 @@ class ResetModal extends React.Component<Props, States> {
     }
   }
 
-  handleResetWordsToNull = async (e) => {
-    const config = {
-      method: 'POST',
-      url: '/admin/words-reset/null',
-      data: {}
-    };
-    utils.simpleAxios(axios, config).then(() => {
-      alert( "성공 !" );
-    });
-  }
-
-  handleResetSpeedToZero = async (e) => {
-    const config = {
-      method: 'POST',
-      url: '/admin/speeds-reset/zero',
-      data: {}
-    };
-    utils.simpleAxios(axios, config).then(() => {
-      alert( "성공 !" );
-    });
-  }
-
   render() {
     return (
       <Modal isOpen={ (this.props.activeModalClassName == this.props.className) ? true : false } toggle={this.close} className={this.props.className} size="sm">
@@ -92,16 +70,6 @@ class ResetModal extends React.Component<Props, States> {
           <span>초기화</span>
         </ModalHeader>
         <ModalBody>
-          <Row>
-            <Col>
-              <Button className="mb-10" color="danger" onClick={this.handleResetWordsToNull}>명령어 전체 삭제</Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Button className="mb-30" color="warning" onClick={this.handleResetSpeedToZero}>속도값 0으로 초기화</Button>
-            </Col>
-          </Row>
           <Row>
             <Col className="notice-before-reset">
               주의 : 보이스/리모콘은 관리자 기본값으로 설정되고 포크봇 비밀번호는 모두 0으로 초기화됩니다.
@@ -112,14 +80,13 @@ class ResetModal extends React.Component<Props, States> {
               <Label>
                 아래에 reset을 입력하세요
               </Label>
-              <InputGroup>
-                <Input placeholder="reset" onChange={this.handleResetInput}></Input>
-                <InputGroupAddon addonType="append"><Button color="primary" onClick={this.handleResetBtn}>확인</Button></InputGroupAddon>
-              </InputGroup>
+              <Input placeholder="reset" onChange={this.handleResetInput}></Input>
             </Col>
           </Row>
         </ModalBody>
         <ModalFooter>
+          <Button color="primary" onClick={this.handleResetBtn}>확인</Button> 
+          <Button color="secondary" onClick={this.close}>취소</Button>  
         </ModalFooter>
       </Modal>
     );

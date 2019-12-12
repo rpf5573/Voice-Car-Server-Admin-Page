@@ -61,9 +61,6 @@ class TeamSettingModal extends React.Component<Props, States> {
     }
 
     if ( passwordBox.placeholder ) {
-      if ( passwordBox.placeholder.length > 1 ) {
-        passwordBox.placeholder = passwordBox.placeholder.substr(1);
-      }
       return passwordBox.placeholder;
     }
 
@@ -71,16 +68,25 @@ class TeamSettingModal extends React.Component<Props, States> {
   }
 
   validate(inputs) {
+    // 0.앞자리가 __group__으로 시작하는지 검사
+    for ( var i = 0; i < inputs.length; i++ ) {
+      let l: string = this.getPasswordFromInput(inputs[i]);
+      if ( l == '0' ) { continue; }
+      let group = l.substr(0, 1);
+      if ( ! ["a", "b"].includes(group) ) {
+        return 401;
+      }
+    }
+
     // 1.중복 검사 - placeholder도 검사해 줘야합니다
     for( var i = 0; i < inputs.length; i++ ) {
-      let l = parseInt(this.getPasswordFromInput(inputs[i]));
-      console.log("l", l);
-      if ( l > 0 ) {
+      let l: string = this.getPasswordFromInput(inputs[i]);
+      if ( l != '0' ) {
         for( var z = i+1; z < inputs.length; z++ ) {
           let r = this.getPasswordFromInput(inputs[z]);
           // placeholder끼리 비교하는 경우도 있지만,,, 뭐 어때 ! 그 둘은 절대 같을 일이 없을 텐데 ㅎㅎ
-          if ( l == r ) {
-            return 401;
+          if ( (r != '0') && (l == r) ) {
+            return 402;
           }
         } 
       }
@@ -95,7 +101,7 @@ class TeamSettingModal extends React.Component<Props, States> {
       }
     }
     if ( emptyBoxCount == inputs.length ) {
-      return 402;
+      return 403;
     }
 
     return 201;
@@ -109,9 +115,12 @@ class TeamSettingModal extends React.Component<Props, States> {
       let result = this.validate(this.passwordInputFields);
       switch(result) {
         case 401:
-          alert('ERROR : 중복된 비밀번호가 있습니다. 다시 확인해 주시기 바랍니다');
+          alert(`ERROR : 비밀번호는 ${window.__group__}로 시작되어야합니다(ex. a1, a352, a5563...)`);
           return;
         case 402:
+          alert('ERROR : 중복된 비밀번호가 있습니다. 다시 확인해 주시기 바랍니다');
+          return;
+        case 403:
           alert( "ERROR : 비밀번호를 입력해 주시기 바랍니다" );
           return;
       }
@@ -123,7 +132,7 @@ class TeamSettingModal extends React.Component<Props, States> {
         if ( val ) { // 0이 들어와도 되기는 한다
           teamPasswords.push({
             team: (i+1),
-            password: `${window.__group__}${val}`
+            password: `${val}`
           });
         }
       }
