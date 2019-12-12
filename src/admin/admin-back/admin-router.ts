@@ -17,7 +17,7 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
       srcPath.js = 'admin/bundle.js';
     }
     let initialSettings = await QH.getInitialState();
-    let document = template(initialSettings, srcPath, '', process.env.__group__);
+    let document = template(initialSettings, srcPath, '', process.env.group);
     return res.set('Content-Type', 'text/html').end(document);
   });
 
