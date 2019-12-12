@@ -31,7 +31,6 @@ app.use(bodyParser.json());
 app.use(morgan('combined', { stream: accessLogStream }));
 adminBackend(app, queryHub);
 userBackend(app, queryHub);
-test("갸갸갸갸갸갸갸");
 
 app.use(express.static('public'));
 
