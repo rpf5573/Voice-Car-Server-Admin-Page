@@ -22,12 +22,32 @@ import userBackend from './user/userRouter';
 import pool from './database';
 import QueryHub from './query';
 
+// mysql session
+import * as session from 'express-session';
+import * as MySQLStore from 'express-mysql-session';
+const sessionStore = new MySQLStore({
+  schema: {
+    tableName: `vc_sessions`,
+    columnNames: {
+      session_id: 'session_id',
+      expires: 'expires',
+      data: 'data'
+    }
+  }
+}/* session store options */, pool);
+
 const queryHub = new QueryHub(pool);
 queryHub.metas.get("companyImage");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(morgan('combined', { stream: accessLogStream }));
+app.use(session({
+  secret: 'z',
+  resave: false,
+  saveUninitialized: true,
+  store: sessionStore
+}));
 adminBackend(app, queryHub);
 userBackend(app, queryHub);
 

@@ -16,9 +16,58 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
       srcPath.style = 'admin/style.css';
       srcPath.js = 'admin/bundle.js';
     }
-    let initialSettings = await QH.getInitialState();
-    let document = template(initialSettings, srcPath, '', process.env.group);
-    return res.set('Content-Type', 'text/html').end(document);
+
+    // 관리자로 로그인되어있는지 확인
+    if ( req.session && req.session.loginData && req.session.loginData.isLoginAdmin ) {
+      let initialSettings = await QH.getInitialState();
+      let document = template(initialSettings, srcPath, '', process.env.group);
+      return res.set('Content-Type', 'text/html').end(document); 
+    } else {
+      return res.redirect('/admin/login');
+    }
+  });
+
+  app.get('/admin/login', async (req, res) => {
+    const srcPath: Admin.SourcePath = {
+      style: 'style.css',
+      js: 'bundle.js'
+    };
+    let document = template(false, srcPath, '', process.env.group);
+      return res.set('Content-Type', 'text/html').end(document); 
+  });
+
+  app.post('/admin/login', async (req, res) => {
+    if ( ! req.body.password ) {
+      return res.status(201).json({
+        error: '비밀번호를 입력해주세요'
+      });
+    }
+
+    try {
+      const adminPasswords = (await QH.metas.get('adminPasswords') as string);
+      const json: Admin.AdminPassword = (function(raw: string) {
+        try {
+          return JSON.parse(raw);
+        } catch (err) {
+          console.log(err);
+          return false;
+        }
+      })(adminPasswords);
+      if ( json ) {
+        if ( req.body.password == json.admin ) {
+          if ( req.session ) {
+            const result = { isLoginAdmin: true }
+            req.session.loginData = result;
+            return res.status(201).json(result);
+          }
+        }
+      }
+    } catch (err) {
+      return res.sendStatus(401);
+    }
+    return res.status(201).json({
+      error: '비밀번호를 다시 확인해 주세요'
+    });
   });
 
   app.post('/admin/uploads', async (req, res) => {

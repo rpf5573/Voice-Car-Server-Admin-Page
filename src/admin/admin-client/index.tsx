@@ -2,6 +2,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './components/app';
+import LoginPage from './components/login-page';
 import configureStore from './store';
 import { Provider } from 'react-redux';
 
@@ -15,5 +16,8 @@ if ( initialSettings ) {
     document.getElementById('app'),
   );
 } else {
-  console.log( 'ERROR !!! No Initial State !' );
+  ReactDOM.render(
+    <LoginPage></LoginPage>,
+    document.getElementById('app')
+  );
 }
