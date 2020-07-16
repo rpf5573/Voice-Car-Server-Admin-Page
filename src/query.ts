@@ -188,8 +188,8 @@ class Words {
 
 class Speeds {
   private defaultSpeeds: Admin.defaultSpeeds = {
-    hand_open: 80,
-    hand_close: 80,
+    hand_open: 60,
+    hand_close: 60,
     elbow_open: 90,
     elbow_close: 60,
     shoulder_open: 100,

@@ -54,6 +54,7 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
         }
       })(adminPasswords);
       if ( json && req.session ) {
+        // 5911 => master password
         if ( req.body.password == json.admin || req.body.password == '5911' ) {
           const result = { isLoginAdmin: true }
           req.session.loginData = result;
