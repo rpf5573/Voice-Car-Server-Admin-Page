@@ -72,7 +72,9 @@ class ResetModal extends React.Component<Props, States> {
         <ModalBody>
           <Row>
             <Col className="notice-before-reset">
-              주의 : 보이스/리모콘은 관리자 기본값으로 설정되고 포크봇 비밀번호는 모두 0으로 초기화됩니다.
+              주의 : 보이스/리모콘은 관리자 기본값으로 설정되고 포크봇 비밀번호는 모두 0으로 초기화됩니다. 또한, 사용자는 속도값과 음성단어를 직접 입력하지 못하게 됩니다. 
+              <p>즉, 초기화를 하면 교육생들은 관리자가
+              미리 세팅해놓은 속도값과 단어만을 사용하게 됩니다.</p>
             </Col>
           </Row>
           <Row>

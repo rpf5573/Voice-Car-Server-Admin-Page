@@ -17,13 +17,14 @@ class QueryHub {
   async getInitialState() {
     var teamCount = await this.teamPasswords.getTeamCount();
     var teamPasswords = await this.teamPasswords.getAll();
-    var metas = <{companyImage: string, adminPasswords: string, rcUsageState: string}> await this.metas.get(['companyImage', 'adminPasswords', 'rcUsageState']);
+    var metas = <{companyImage: string, adminPasswords: string, rcUsageState: string, userCanEditSpeedAndWords: string}> await this.metas.get(['companyImage', 'adminPasswords', 'rcUsageState', 'userCanEditSpeedAndWords']);
     return {
       teamPasswords,
       teamCount,
       companyImage: metas.companyImage,
       adminPasswords: JSON.parse(metas.adminPasswords),
-      rcUsageState: parseInt(metas.rcUsageState)
+      rcUsageState: parseInt(metas.rcUsageState),
+      userCanEditSpeedAndWords: parseInt(metas.userCanEditSpeedAndWords),
     };
   }
   async reset() {
@@ -83,6 +84,9 @@ class Metas {
 
     // remotecontroller & voice setting
     sql = `UPDATE ${this.table} SET metaValue='0' WHERE metaKey='rcUsageState'`;
+    result = await this.pool.query(sql);
+
+    sql = `UPDATE ${this.table} SET metaValue='0' WHERE metaKey='userCanEditSpeedAndWords'`;
     result = await this.pool.query(sql);
 
     return result;

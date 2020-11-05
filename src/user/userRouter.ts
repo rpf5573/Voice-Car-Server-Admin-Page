@@ -9,10 +9,11 @@ export default (app:Express, QH: QueryHub) => {
     try {
       let teamPasswords = await QH.teamPasswords.getAll();
       let rcUsageState = await QH.metas.get('rcUsageState');
+      let userCanEditSpeedAndWords = await QH.metas.get('userCanEditSpeedAndWords');
       for(let i = 0; i < teamPasswords.length; i++) {
         if (pw == teamPasswords[i].password) {
           team = teamPasswords[i].team;
-          return res.status(201).json({team, rcUsageState});
+          return res.status(201).json({team, rcUsageState, userCanEditSpeedAndWords});
         }
       }
     } catch(err) {

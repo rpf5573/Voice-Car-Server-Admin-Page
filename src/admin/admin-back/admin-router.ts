@@ -145,7 +145,6 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
 
   app.post('/admin/option-settings/rcUsageState', async(req, res) => {
     try {
-      console.log(req.body.rcUsageState);
       await QH.metas.update('rcUsageState', req.body.rcUsageState);
       await QH.speeds.resetToDefault();
       return res.sendStatus(201);
@@ -170,7 +169,8 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
   });
   app.post('/admin/words-reset/null', async(req, res) => {
     try {
-      const result = await QH.words.resetToNull();
+      await QH.words.resetToNull();
+      await QH.metas.update('userCanEditSpeedAndWords', '1');
       return res.sendStatus(201);
     } catch(error) {
       console.error(error);
@@ -183,7 +183,7 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
   // speeds
   app.post('/admin/speeds-reset/default', async(req, res) => {
     try {
-      const result = await QH.speeds.resetToDefault();
+      await QH.speeds.resetToDefault();
       return res.sendStatus(201);
     } catch(error) {
       console.error(error);
@@ -194,7 +194,8 @@ export default (app: Express, uploadHandler: RequestHandler, QH: QueryHub) => {
   });
   app.post('/admin/speeds-reset/zero', async(req, res) => {
     try {
-      const result = await QH.speeds.resetToZero();
+      await QH.speeds.resetToZero();
+      await QH.metas.update('userCanEditSpeedAndWords', '1');
       return res.sendStatus(201);
     } catch(error) {
       console.error(error);
