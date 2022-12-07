@@ -5,8 +5,8 @@
   "author": "rpf5573",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
     "express-mysql-session": "^2.1.0",
     "express-session": "^1.17.0",
     "fs-extra": "^8.0.1",
